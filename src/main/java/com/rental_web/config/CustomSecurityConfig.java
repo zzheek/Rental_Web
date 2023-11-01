@@ -5,39 +5,100 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import com.rental_web.security.handler.Custom403Handler;
 
-@Log4j2
+import javax.sql.DataSource;
+
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true) // 특정 경로에 접근 권한 설정
+@Log4j2
+@EnableMethodSecurity
+@RequiredArgsConstructor
 public class CustomSecurityConfig {
 
+    private final DataSource dataSource;
+
+    private final UserDetailsService userDetailsService;
+
+//    @Bean
+//    public UserDetailsService userDetailsService(){
+//        return new CustomUserDetailsService(passwordEncoder());
+//    }
+
+
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean // 680page
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-       // http.formLogin().loginPage("member/login"); // 로그인이 필요한 경우에 ~경로로 자동 리다이렉트
-        //위 주석 풀시 로그인 페이지로 이동......
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http)throws Exception {
 
-        http.csrf().disable();  // username과 password라는 파라미터만으로 로그인 가능
+        log.info("----------------Security Config----------------------");
+
+        //deprecated
+        // http.formLogin();
+        // http.formLogin(Customizer.withDefaults());
+        http.formLogin(form -> {
+
+            form.loginPage("/member/login");
+
+
+        });
+
+        http.csrf(httpSecurityCsrfConfigurer ->  httpSecurityCsrfConfigurer.disable() );
+        http.logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer.logoutUrl("/logout"));
+
+        http.rememberMe(httpSecurityRememberMeConfigurer -> {
+
+            httpSecurityRememberMeConfigurer.key("12345678")
+                    .tokenRepository(persistentTokenRepository())
+                    .userDetailsService(userDetailsService)
+                    .tokenValiditySeconds(60*60*24*30);
+
+        });
+
+        http.exceptionHandling(httpSecurityExceptionHandlingConfigurer -> {
+
+            httpSecurityExceptionHandlingConfigurer.accessDeniedHandler(accessDeniedHandler());
+        });
+
+
+
 
         return http.build();
+    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new Custom403Handler();
+    }
+
+
+
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+
+        log.info("------------web configure-------------------");
+
+        return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
 
     }
 
-    @Bean // 정적 자원들은 스프링 시큐리티에서 적용 제외(css등)
-    public WebSecurityCustomizer webSecurityCustomizer() {
-
-        return (web)  -> web.ignoring().requestMatchers(PathRequest.toStaticResources()
-                                                        .atCommonLocations());
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl repo = new JdbcTokenRepositoryImpl();
+        repo.setDataSource(dataSource);
+        return repo;
     }
 }
