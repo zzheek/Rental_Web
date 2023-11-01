@@ -10832,6 +10832,7 @@ textarea.form-control-lg {
   position: relative;
   z-index: 2;
 }
+
 .social-icons .btn {
   display: inline-flex;
   align-items: center;
@@ -10845,8 +10846,8 @@ textarea.form-control-lg {
 @media (min-width: 992px) {
   .social-icons {
     position: absolute;
-    height: 100%;
-    top: 0;
+    height: 90%;
+    bottom: 0;
     right: 2.5rem;
     width: auto;
   }
