@@ -1,5 +1,4 @@
 package com.rental_web.config;
-
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;

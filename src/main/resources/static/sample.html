@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -31,12 +33,15 @@
 
 
         <!-- Page Content-->
-        <div class="content">
+        <div class="container-fluid" layout:fragment="content">
+
+            <div class="content">
 
 
-            내용 들어가는 곳
+                내용 들어가는 곳
 
 
+            </div>
         </div>
 
 
