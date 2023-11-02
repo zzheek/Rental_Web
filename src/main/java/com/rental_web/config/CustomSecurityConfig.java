@@ -5,7 +5,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -29,10 +28,13 @@ public class CustomSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http)throws Exception {
 
         http.formLogin(form -> {
-            form.loginPage("/member/login");
+            form.loginPage("/member/login")
+                    .defaultSuccessUrl("/")
+                    .failureUrl("/member/login");
         });
 
-        http.csrf().disable();
+        http.csrf(httpSecurityCsrfConfigurer ->  httpSecurityCsrfConfigurer.disable() );
+        http.logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer.logoutUrl("/logout"));
 
         return http.build();
     }

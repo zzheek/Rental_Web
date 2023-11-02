@@ -1,17 +1,21 @@
 package com.rental_web.domain;
 
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "roleSet")
 public class Member{
 
     @Id
@@ -31,6 +35,10 @@ public class Member{
 
     private boolean social;     // 소셜 가입 여부
 
+    @ElementCollection(fetch = FetchType.LAZY)
+    @Builder.Default
+    private Set<MemberRole> roleSet = new HashSet<>();
+
     public void changePassword(String memberpass) {
         this.memberpass = memberpass;
     }
@@ -46,5 +54,7 @@ public class Member{
     public void changeAddr(String memberaddr) {
         this.memberaddr = memberaddr;
     }
+
+    public void clearRoles() { this.roleSet.clear(); }
 
 }
