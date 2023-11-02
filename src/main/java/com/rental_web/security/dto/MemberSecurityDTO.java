@@ -23,16 +23,16 @@ public class MemberSecurityDTO extends User {
     private LocalDateTime asdate;   // AS 날짜
     private boolean social;     // 소셜 가입 여부
 
-    public MemberSecurityDTO(String memberid, String membername, String memberpass,
+    public MemberSecurityDTO(String username, String password, String membername,
                              String memberemail, Long memberphone, String memberaddr,
                              LocalDateTime asdate, boolean social,
                              Collection<? extends GrantedAuthority> authorities){
 
-        super(memberid,memberpass,authorities);
+        super(username,password,authorities);
 
-        this.memberid = memberid;
+        this.memberid = username;
         this.membername = membername;
-        this.memberpass = memberpass;
+        this.memberpass = password;
         this.memberemail = memberemail;
         this.memberphone = memberphone;
         this.memberaddr = memberaddr;
