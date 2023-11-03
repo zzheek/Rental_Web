@@ -7,7 +7,6 @@ import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
@@ -16,11 +15,11 @@ import java.time.LocalDateTime;
 public class BaseEntity {
 
     @CreatedDate
-    @Column(name = "csdate")
+    @Column(name = "csdate", updatable = false)
     private LocalDateTime csdate;
 
     @CreatedDate
-    @Column(name="csredate")
+    @Column(name="csredate", updatable = false)
     private LocalDateTime csredate;
 
 }
