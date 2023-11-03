@@ -57,4 +57,8 @@ public class Member{
 
     public void clearRoles() { this.roleSet.clear(); }
 
+    public void addRole(MemberRole memberRole){
+        this.roleSet.add(memberRole);
+    }
+
 }

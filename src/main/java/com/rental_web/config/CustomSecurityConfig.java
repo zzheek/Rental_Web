@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Log4j2
 @Configuration  // 비밀번호 암호화
@@ -27,14 +28,24 @@ public class CustomSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http)throws Exception {
 
-        http.formLogin(form -> {
-            form.loginPage("/member/login")
-                    .defaultSuccessUrl("/")
-                    .failureUrl("/member/login");
-        });
+//        http.formLogin(form -> {
+//            form.loginPage("/member/login")
+//                    .defaultSuccessUrl("/")
+//                    .failureUrl("/member/login");
+//        });
+        http.formLogin((formLogin) -> formLogin
+                        .loginPage("/member/login")
+                        .defaultSuccessUrl("/introduce/introduce"))
+                .logout((logout) -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .invalidateHttpSession(true))
+        ;
+
 
         http.csrf(httpSecurityCsrfConfigurer ->  httpSecurityCsrfConfigurer.disable() );
-        http.logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer.logoutUrl("/logout"));
+        //http.logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer.logoutUrl("/logout"));
+
+        http.oauth2Login().loginPage("/member/login");
 
         return http.build();
     }

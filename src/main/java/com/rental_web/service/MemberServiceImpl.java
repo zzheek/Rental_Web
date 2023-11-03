@@ -1,6 +1,7 @@
 package com.rental_web.service;
 
 import com.rental_web.domain.Member;
+import com.rental_web.domain.MemberRole;
 import com.rental_web.dto.MemberJoinDTO;
 import com.rental_web.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,7 @@ public class MemberServiceImpl implements MemberService{
 
         Member member = modelMapper.map(memberJoinDTO, Member.class);
         member.changePassword(passwordEncoder.encode(memberJoinDTO.getMemberpass()));
+        member.addRole(MemberRole.USER);
 
         memberRepository.save(member);
 
