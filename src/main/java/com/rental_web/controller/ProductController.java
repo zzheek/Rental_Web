@@ -42,7 +42,7 @@ public class ProductController {
 
         model.addAttribute("responseDTO",responseDTO);
     }
-    @PreAuthorize("hasRole('ADMIN')")
+
     @GetMapping("/register")
     public void registerGET(){
 

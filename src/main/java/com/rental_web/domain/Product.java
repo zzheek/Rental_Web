@@ -13,7 +13,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product extends BaseEntity {
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +43,7 @@ public class Product extends BaseEntity {
             orphanRemoval = true)
     @Builder.Default
     @BatchSize(size = 20)
-    private Set<ProductImage> imageSet =new HashSet<>();
+    private Set<ProductImage> imageSet = new HashSet<>();
 
     public void  addImage(String uuid, String fileName){
         ProductImage productImage = ProductImage.builder()
@@ -61,7 +61,6 @@ public class Product extends BaseEntity {
 
         this.imageSet.clear();
     }
-
 
 
 }
