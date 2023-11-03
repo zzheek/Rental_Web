@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="eng">
+<style>
+    .content {
+        width: 80%;
+        height: 800px;
+        margin: 10px auto;
+    }
+</style>
+
+<script>
+
+    const errors = [[${errors}]]
+    console.log(errors)
+
+    let errorMsg = ''
+
+    if(errors){
+        for (let i = 0; i < errors.length; i++) {
+            errorMsg += `${errors[i].field}은(는) ${errors[i].code} \n`
+        }
+        alert(errorMsg)
+    }
+
+    //업로드 모달
+    const uploadModal = new bootstrap.Modal(document.querySelector(".uploadModal"))
+
+    document.querySelector(".uploadFileBtn").addEventListener("click", function(e){
+
+        e.stopPropagation()
+        e.preventDefault()
+        uploadModal.show()
+
+    }, false)
+
+
+    document.querySelector(".uploadBtn").addEventListener("click", function(e){
+
+        const formObj = new FormData();
+
+        const fileInput = document.querySelector("input[name='files']")
+
+        console.log(fileInput.files)
+
+        const files = fileInput.files
+
+        for (let i = 0; i < files.length; i++) {
+            formObj.append("files", files[i]);
+        }
+
+
+        uploadToServer(formObj).then(result => {
+            console.log(result)
+            //console.log(result)
+            for (const uploadResult of result) {
+                showUploadFile(uploadResult)
+            }
+            uploadModal.hide()
+        }).catch(e => {
+            uploadModal.hide()
+        })
+
+    },false)
+
+    const uploadResult = document.querySelector(".uploadResult")
+
+    function showUploadFile({uuid, fileName, link}){
+
+        const str =`<div class="card col-4">
+            <div class="card-header d-flex justify-content-center">
+                ${fileName}
+                <button class="btn-sm btn-danger" onclick="javascript:removeFile('${uuid}', '${fileName}', this)" >X</button>
+            </div>
+            <div class="card-body">
+                 <img src="/view/${link}" data-src="${uuid+"_"+fileName}" >
+            </div>
+        </div><!-- card -->`
+
+        uploadResult.innerHTML += str
+    }
+
+
+    function removeFile(uuid,fileName, obj){
+
+        console.log(uuid)
+        console.log(fileName)
+
+        console.log(obj)
+
+        const targetDiv = obj.closest(".card")
+
+        removeFileToServer(uuid, fileName).then(data => {
+            targetDiv.remove()
+        })
+    }
+
+    document.querySelector(".submitBtn").addEventListener("click", function(e){
+
+        e.preventDefault()
+        e.stopPropagation()
+
+        const target = document.querySelector(".uploadHidden")
+
+        const uploadFiles = uploadResult.querySelectorAll("img")
+
+        let str = ''
+
+        for (let i = 0; i < uploadFiles.length ; i++) {
+            const uploadFile = uploadFiles[i]
+            const imgLink = uploadFile.getAttribute("data-src")
+
+            str += `<input type='hidden' name='fileNames' value="${imgLink}">`
+        }
+
+        target.innerHTML = str;
+
+        const formObj = document.querySelector("form");
+
+        formObj.submit();
+        formObj.reset();
+
+    }, false)
+</script>
+
+
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>제품 등록</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="../css/styles.css" rel="stylesheet" />
+</head>
+<body>
+<!-- Responsive navbar-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container px-5">
+        <a class="navbar-brand" href="/"><img src="../assets/logo.png" width="40%"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="/introduce/introduce">회사소개</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">제품소개</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">상담문의</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">AS일정</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">렌탈회사</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<!-- Page Content-->
+<div class="content" align="center" >
+    <form action="/product/register" method="post">
+        <div style="width: 30%; height:20%;">
+            <!--제품이름-->
+            <div class="input-group mb-3">
+                <span class="input-group-text">제품이름</span>
+                <input type="text" name=productname class="form-control" placeholder="제품이름">
+            </div>
+            <!--제품가격-->
+            <div class="input-group mb-3">
+                <span class="input-group-text">제품가격</span>
+                <input type="number" name="productprice" class="form-control" placeholder="제품가격">
+            </div>
+            <!--제품특징-->
+            <div class="input-group mb-3">
+                <span class="input-group-text">제품특징</span>
+                <textarea class="form-control col-sm-5" rows="5" name="productfeat"></textarea>
+            </div>
+            <!--제품이미지-->
+            <div class="input-group mb-3">
+                <span class="input-group-text">Images</span>
+                <div class="float-end uploadHidden">
+                    <button type="button" class="btn btn-primary uploadFileBtn">ADD Files</button>
+                </div>
+            </div>
+            <!--버튼-->
+            <div class="my-4">
+                <div class="float-end">
+                    <button type="submit" class="btn btn-primary submitBtn">Submit</button>
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<!-- 첨부 파일 섬네일을 보여줄 부분 -->
+<div class="row mt-3">
+    <div class="col ">
+        <div class="container-fluid d-flex uploadResult" style="flex-wrap: wrap;">
+        </div>
+    </div>
+</div>
+<!--첨부파일 추가를 위한 모달창 -->
+<div class="modal uploadModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Upload File</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group mb-3">
+                    <input type="file" name="files" class="form-control" multiple >
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary uploadBtn">Upload</button>
+                <button type="button" class="btn btn-outline-dark closeUploadBtn" >Close</button>
+            </div>
+        </div>
+    </div>
+</div><!-- register modal -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/upload.js"></script>
+
+
+<!-- Social Icons-->
+<!-- For more icon options, visit https://fontawesome.com/icons?d=gallery&p=2&s=brands-->
+<div class="social-icons">
+    <div class="d-flex flex-row flex-lg-column justify-content-center align-items-center h-100 mt-3 mt-lg-0">
+        <a class="btn btn-dark m-3" href="#!"><i class="fab fa-twitter">로그인</i></a>
+        <a class="btn btn-dark m-3" href="#!"><i class="fab fa-facebook-f">회원가입</i></a>
+        <a class="btn btn-dark m-3" href="#!"><i class="fab fa-instagram">카카오톡 상담</i></a>
+    </div>
+</div>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="../../static/js/scripts.js"></script>
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+<!-- * *                               SB Forms JS                               * *-->
+<!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
+
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+    <div class="container px-4 px-lg-5"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+</footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="/js/scripts.js"></script>
+</body>
+</html>
