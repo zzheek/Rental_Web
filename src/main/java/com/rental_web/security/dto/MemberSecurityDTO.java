@@ -5,14 +5,16 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Map;
 
 @Getter
 @Setter
 @ToString
-public class MemberSecurityDTO extends User {
+public class MemberSecurityDTO extends User implements OAuth2User {
 
     private String memberid;    // 회원아이디
     private String membername;  // 회원 이름
@@ -22,6 +24,8 @@ public class MemberSecurityDTO extends User {
     private String memberaddr;  // 회원 주소
     private LocalDateTime asdate;   // AS 날짜
     private boolean social;     // 소셜 가입 여부
+
+    private Map<String, Object> props; // 소셜 로그인 정보
 
     public MemberSecurityDTO(String username, String password, String membername,
                              String memberemail, Long memberphone, String memberaddr,
@@ -39,6 +43,16 @@ public class MemberSecurityDTO extends User {
         this.asdate = asdate;
         this.social = social;
 
+    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return this.getProps();
+    }
+
+    @Override
+    public String getName() {
+        return this.memberid;
     }
 
 }

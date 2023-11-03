@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
+
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -81,11 +83,19 @@
             </div>
         </div>
 
+        <div sec:authorize="isAuthenticated()">
+            <p>사용자 이름: <span th:text="${#authentication.principal.username}"></span></p>
+            <p>사용자 이메일: <span th:text="${#authentication.principal.memberemail}"></span></p>
+        </div>
+
+
+
         <!-- Social Icons-->
         <!-- For more icon options, visit https://fontawesome.com/icons?d=gallery&p=2&s=brands-->
         <div class="social-icons">
             <div class="d-flex flex-row flex-lg-column justify-content-center align-items-center h-100 mt-3 mt-lg-0">
-                <a class="btn btn-dark m-3" href="../member/login"><i class="fab fa-twitter">로그인</i></a>
+                <a class="btn btn-dark m-3" sec:authorize="isAuthenticated()" href="/logout"><i class="fab fa-twitter">로그아웃</i></a>
+                <a class="btn btn-dark m-3" sec:authorize="isAnonymous()" href="../member/login"><i class="fab fa-twitter">로그인</i></a>
                 <a class="btn btn-dark m-3" href="../member/join"><i class="fab fa-facebook-f">회원가입</i></a>
                 <a class="btn btn-dark m-3" href="#!"><i class="fab fa-instagram">카카오톡 상담</i></a>
             </div>
