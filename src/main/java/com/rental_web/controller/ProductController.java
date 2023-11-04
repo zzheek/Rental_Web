@@ -97,7 +97,7 @@ public class ProductController {
 
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors() );
 
-            redirectAttributes.addAttribute("bno", productDTO.getProductnum());
+            redirectAttributes.addAttribute("productnum", productDTO.getProductnum());
 
             return "redirect:/product/modify?"+link;
         }
@@ -106,7 +106,7 @@ public class ProductController {
 
         redirectAttributes.addFlashAttribute("result", "modified");
 
-        redirectAttributes.addAttribute("bno", productDTO.getProductnum());
+        redirectAttributes.addAttribute("productnum", productDTO.getProductnum());
 
         return "redirect:/product/read";
     }

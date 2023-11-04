@@ -43,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
 
         ProductDTO productDTO = entityToDTO(product);
 
-        return null;
+        return productDTO;
     }
 
     @Override
@@ -81,7 +81,7 @@ public class ProductServiceImpl implements ProductService {
         String keyword = pageRequestDTO.getKeyword();
         Pageable pageable = pageRequestDTO.getPageable("productnum");
 
-        Page<Product> result =productRepository.searchAll(types, keyword, pageable);
+        Page<Product> result = productRepository.searchAll(types, keyword, pageable);
 
         List<ProductDTO> dtoList = result.getContent().stream()
                 .map(product -> modelMapper.map(product,ProductDTO.class)).collect(Collectors.toList());

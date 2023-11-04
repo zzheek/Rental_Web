@@ -16,11 +16,8 @@ import java.util.List;
 @NoArgsConstructor
 public class ProductDTO {
 
-
-    @NotNull
     private Long productnum;
 
-    @NotEmpty
     private String productname;
 
     private String productimag;

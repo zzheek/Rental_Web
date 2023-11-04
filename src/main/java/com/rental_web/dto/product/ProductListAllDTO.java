@@ -24,6 +24,8 @@ public class ProductListAllDTO {
 
     private Long productprice;
 
-    private List<String> fileNames;
+    //private List<String> fileNames;
+
+    private List<ProductImageDTO> productImages;
 
 }
