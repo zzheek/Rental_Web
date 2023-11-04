@@ -10,5 +10,6 @@ public interface ProductSearch {
 
     Page<Product> searchAll(String[] types, String keyword, Pageable pageable);
 
+
 }
 
