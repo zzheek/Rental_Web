@@ -66,6 +66,7 @@
         <tr>
             <th scope="col">productnum</th>
             <th scope="col">productname</th>
+            <th scope="col">productimag</th>
             <th scope="col">productprice</th>
         </tr>
         </thead>
@@ -74,12 +75,19 @@
         <tr th:each="dto:${responseDTO.dtoList}"  >
             <td>[[${dto.productnum}]]</td>
             <td>[[${dto.productname}]]</td>
+            <td></td>
             <td>[[${dto.productprice}]]</td>
         </tr>
         </tbody>
+<!--        <div th:if="${dto.productImages != null && dto.productImages.size() > 0}">-->
+<!--            <img style="width:100px" th:each="productImage: ${dto.productImages}" th:src="@{'/view/s_' + ${productImage.uuid} + '_' + ${productImage.fileName}}"/>-->
+<!--        </div>-->
+         이미지 출력 부분을 표시하려면 dto 객체와 productImages 속성을 모두 확인
+        <div th:if="${dto != null and dto.productImages != null and dto.productImages.size() > 0}">
+            <img style="width:100px" th:each="productImage: ${dto.productImages}" th:src="@{'/view/s_' + ${productImage.uuid} + '_' + ${productImage.fileName}}"/>
+        </div>
 
-
-    </table>
+        </table>
 
 
 

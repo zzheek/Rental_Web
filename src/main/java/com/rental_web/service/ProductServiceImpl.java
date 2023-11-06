@@ -52,7 +52,7 @@ public class ProductServiceImpl implements ProductService {
 
         Product product = result.orElseThrow();
 
-        product.change(productDTO.getProductname(), productDTO.getProductfeat(), productDTO.getProductimag(),productDTO.getProductprice());
+        product.change(productDTO.getProductname(), productDTO.getProductfeat(), productDTO.getProductprice());
 
         //첨부파일의 처리
         product.clearImages();

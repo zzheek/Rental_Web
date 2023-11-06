@@ -3,6 +3,7 @@ package com.rental_web.controller;
 import com.rental_web.dto.PageRequestDTO;
 import com.rental_web.dto.PageResponseDTO;
 import com.rental_web.dto.product.ProductDTO;
+import com.rental_web.dto.product.ProductImageDTO;
 import com.rental_web.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,8 @@ import java.io.File;
 import java.nio.file.Files;
 import java.util.List;
 
+import static com.rental_web.domain.QProductImage.productImage;
+
 @Controller
 @RequestMapping("/product")
 @Log4j2
@@ -35,12 +38,16 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/list")
-    public void list(PageRequestDTO pageRequestDTO, Model model){
+    public void list(PageRequestDTO pageRequestDTO, Model model, ProductImageDTO productImageDTO, ProductDTO productDTO){
         PageResponseDTO<ProductDTO> responseDTO = productService.list(pageRequestDTO);
 
         log.info(responseDTO);
 
         model.addAttribute("responseDTO",responseDTO);
+        model.addAttribute("productImageDTO", productImageDTO); // productImageDTO는 실제 데이터로 채워진 DTO 객체여야 합니다.
+        log.info("==========================productImageDTO===============================================");
+        log.info(productDTO);
+
     }
 
     @GetMapping("/register")

@@ -13,6 +13,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = "imageSet")
 public class Product {
 
     @Id
@@ -23,17 +24,13 @@ public class Product {
     private String productname;
 
     @Column(length = 1000, nullable = true)
-    private String productimag;
-
-    @Column(length = 1000, nullable = true)
     private String productfeat;
 
     private Long productprice;
 
-    public void change(String productname, String productfeat, String productimag, Long productprice){
+    public void change(String productname, String productfeat, Long productprice){
         this.productname = productname;
         this.productfeat = productfeat;
-        this.productimag = productimag;
         this.productprice = productprice;
     }
 

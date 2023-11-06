@@ -25,6 +25,7 @@ public class MemberController {
     // 의존성 주입
     private final MemberService memberService;
 
+
     @GetMapping("/login")
     public void loginGET(String error, String logout) {
         log.info("login get.....");

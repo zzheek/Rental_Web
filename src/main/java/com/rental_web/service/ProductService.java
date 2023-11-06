@@ -6,8 +6,11 @@ import com.rental_web.dto.PageRequestDTO;
 import com.rental_web.dto.PageResponseDTO;
 import com.rental_web.dto.product.ProductDTO;
 
+
+
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 public interface ProductService {
 
@@ -45,12 +48,12 @@ public interface ProductService {
                 .productfeat(product.getProductfeat())
                 .productprice(product.getProductprice())
                 .build();
+
         List<String> fileNames =
                 product.getImageSet().stream().sorted().map(productImage ->
                         productImage.getUuid()+"_"+productImage.getFileName()).collect(Collectors.toList());
 
         productDTO.setFileNames(fileNames);
-
         return productDTO;
     }
 }
