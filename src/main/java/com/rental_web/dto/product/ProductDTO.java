@@ -20,8 +20,6 @@ public class ProductDTO {
 
     private String productname;
 
-    private String productimag;
-
     private String productfeat;
 
     private Long productprice;

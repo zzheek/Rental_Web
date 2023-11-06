@@ -18,13 +18,11 @@ public class ProductListAllDTO {
 
     private String productname;
 
-    private String productimag;
-
     private String productfeat;
 
     private Long productprice;
 
-    //private List<String> fileNames;
+    private List<String> fileNames;
 
     private List<ProductImageDTO> productImages;
 

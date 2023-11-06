@@ -10,6 +10,14 @@ public interface ProductSearch {
 
     Page<Product> searchAll(String[] types, String keyword, Pageable pageable);
 
+//    //Page<BoardListReplyCountDTO> searchWithReplyCount(String[] types,
+//                                                      String keyword,
+//                                                      Pageable pageable);
+
+    Page<ProductListAllDTO> searchWithAll(String[] types,
+                                        String keyword,
+                                        Pageable pageable);
+
 
 }
 

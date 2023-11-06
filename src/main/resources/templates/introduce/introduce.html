@@ -15,21 +15,8 @@
     </head>
     <body>
         <!-- Responsive navbar-->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container px-5">
-                <a class="navbar-brand" href="/"><img src="../assets/logo.png" width="40%"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/introduce/introduce">회사소개</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">제품소개</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">상담문의</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">AS일정</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">렌탈회사</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        <div th:replace="fragment/nav :: navFragment"></div>
+
 
         <div class="form-group row">
             <label for="author" class="col-sm-2 col-form-label"><strong>작성자</strong></label>
@@ -53,6 +40,8 @@
             <div>
                 신뢰성과 신속한 AS로 다수의 거래처를 확보한 회사입니다.
             </div>
+
+
                <table>
                    <tr>
                        <td><div  id="map" style="width:500px;height:400px;"></div></td>
