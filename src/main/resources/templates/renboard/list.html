@@ -6,7 +6,7 @@
 <div layout:fragment="content">
 
     <div class="row mt-3">
-        <form action="/board/list" method="get">
+        <form action="/renboard/list" method="get">
             <div class="col">
                 <input type="hidden" name="size" th:value="${pageRequestDTO.size}">
                 <div class="input-group">
@@ -36,32 +36,32 @@
 
             <div class="card">
                 <div class="card-header">
-                    Board List
+                    renboard List
                 </div>
                 <div class="card-body" >
-                    <h5 class="card-title">Board List </h5>
+                    <h5 class="card-title">renboard List </h5>
 
                     <table class="table">
                         <thead>
                         <tr>
-                            <th scope="col">Bno</th>
+                            <th scope="col">rennum</th>
                             <th scope="col">Title</th>
-                            <th scope="col">Writer</th>
+                            <th scope="col">renwriter</th>
                             <th scope="col">RegDate</th>
                         </tr>
                         </thead>
 
                         <tbody th:with="link = ${pageRequestDTO.getLink()}">
                         <tr th:each="dto:${responseDTO.dtoList}"  >
-                            <td>[[${dto.bno}]]</td>
+                            <td>[[${dto.rennum}]]</td>
                             <td>
-                                <a th:href="|@{/board/read(bno =${dto.bno})}&${link}|" class="text-decoration-none"> [[${dto.title}]] </a>
+                                <a th:href="|@{/renboard/read(rennum =${dto.rennum})}&${link}|" class="text-decoration-none"> [[${dto.rentitle}]] </a>
                                 <span class="badge progress-bar-success" style="background-color: #0a53be">[[${dto.replyCount}]]</span>
-                                <div th:if="${dto.boardImages != null && dto.boardImages.size() > 0}">
-                                    <img style="width:100px" th:each="boarImage: ${dto.boardImages}" th:src="|/view/s_${boarImage.uuid}_${boarImage.fileName}|">
+                                <div th:if="${dto.renboardImages != null && dto.renboardImages.size() > 0}">
+                                    <img style="width:100px" th:each="renboardImage: ${dto.renboardImages}" th:src="|/view/s_${renboardImage.uuid}_${renboardImage.fileName}|">
                                 </div>
                             </td>
-                            <td>[[${dto.writer}]]</td>
+                            <td>[[${dto.renwriter}]]</td>
                             <td>[[${#temporals.format(dto.regDate, 'yyyy-MM-dd')}]]</td>
                         </tr>
                         </tbody>
@@ -142,7 +142,7 @@
         e.preventDefault()
         e.stopPropagation()
 
-        self.location ='/board/list'
+        self.location ='/renboard/list'
 
     },false)
 
