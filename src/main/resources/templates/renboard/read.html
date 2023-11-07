@@ -6,7 +6,7 @@
 
 
 <head>
-    <title>Board Read</title>
+    <title>renboard Read</title>
 </head>
 
 <div layout:fragment="content">
@@ -14,26 +14,26 @@
         <div class="col">
             <div class="card">
                 <div class="card-header">
-                    Board Read
+                    renboard Read
                 </div>
                 <div class="card-body">
                     <div class="input-group mb-3">
-                        <span class="input-group-text">Bno</span>
-                        <input type="text" class="form-control" th:value="${dto.bno}" readonly>
+                        <span class="input-group-text">rennum</span>
+                        <input type="text" class="form-control" th:value="${dto.rennum}" readonly>
                     </div>
                     <div class="input-group mb-3">
-                        <span class="input-group-text">Title</span>
-                        <input type="text" class="form-control" th:value="${dto.title}" readonly>
-                    </div>
-
-                    <div class="input-group mb-3">
-                        <span class="input-group-text">Content</span>
-                        <textarea class="form-control col-sm-5" rows="5" readonly>[[${dto.content}]]</textarea>
+                        <span class="input-group-text">rentitle</span>
+                        <input type="text" class="form-control" th:value="${dto.rentitle}" readonly>
                     </div>
 
                     <div class="input-group mb-3">
-                        <span class="input-group-text">Writer</span>
-                        <input type="text" class="form-control" th:value="${dto.writer}" readonly>
+                        <span class="input-group-text">rencontent</span>
+                        <textarea class="form-control col-sm-5" rows="5" readonly>[[${dto.rencontent}]]</textarea>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">renwriter</span>
+                        <input type="text" class="form-control" th:value="${dto.renwriter}" readonly>
                     </div>
 
                     <div class="input-group mb-3">
@@ -47,10 +47,10 @@
 
                     <div class="my-4" th:with="user=${#authentication.principal}">
                         <div class="float-end" th:with="link = ${pageRequestDTO.getLink()}">
-                            <a th:href="|@{/board/list}?${link}|" class="text-decoration-none">
+                            <a th:href="|@{/templates/renboard/list}?${link}|" class="text-decoration-none">
                                 <button type="button" class="btn btn-primary">List</button>
                             </a>
-                            <a th:if="${user != null && user.username == dto.writer}" th:href="|@{/board/modify(bno=${dto.bno})}&${link}|" class="text-decoration-none">
+                            <a th:if="${user != null && user.username == dto.renwriter}" th:href="|@{/templates/renboard/modify(rennum=${dto.rennum})}&${link}|" class="text-decoration-none">
                                 <button type="button" class="btn btn-secondary">Modify</button>
                             </a>
                         </div>
@@ -148,7 +148,7 @@
 
     const currentUser = [[${#authentication.principal.username}]]
 
-    const bno = [[${dto.bno}]]
+    const rennum = [[${dto.rennum}]]
 
     const replyList = document.querySelector('.replyList') //댓글 목록 DOM
     const replyPaging = document.querySelector('.replyPaging') //페이지 목록 DOM
@@ -193,7 +193,7 @@
 
     function printReplies(page,size,goLast){
 
-        getList({bno, page,size, goLast}).then(
+        getList({rennum, page,size, goLast}).then(
             data => {
                 printList(data.dtoList) //목록 처리
                 printPages(data) //페이지 처리
@@ -225,7 +225,7 @@
 
     registerBtn.addEventListener("click", function(e){
         const replyObj = {
-            bno:bno,
+            rennum:rennum,
             replyText:replyText.value,
             replyer:replyer.value}
 
@@ -317,7 +317,7 @@
 
 
         const replyObj = {
-            bno:bno,
+            rennum:rennum,
             rno:replyHeader.innerHTML,
             replyText:modifyText.value}
 

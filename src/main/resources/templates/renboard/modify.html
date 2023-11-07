@@ -4,7 +4,7 @@
       layout:decorate="~{layout/basic.html}">
 
 <head>
-    <title>Board Modify</title>
+    <title>renboard Modify</title>
 </head>
 
 <div layout:fragment="content">
@@ -12,22 +12,22 @@
         <div class="col">
             <div class="card">
                 <div class="card-header">
-                    Board Modify
+                    renboard Modify
                 </div>
                 <div class="card-body">
-                    <form th:action="@{/board/modify}" method="post" id="f1">
+                    <form th:action="@{/templates/renboard/modify}" method="post" id="f1">
                         <div class="input-group mb-3">
-                            <span class="input-group-text">Bno</span>
-                            <input type="text" class="form-control" th:value="${dto.bno}" name="bno" readonly>
+                            <span class="input-group-text">rennum</span>
+                            <input type="text" class="form-control" th:value="${dto.rennum}" name="rennum" readonly>
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">Title</span>
-                            <input type="text" class="form-control" name="title" th:value="${dto.title}">
+                            <span class="input-group-text">rentitle</span>
+                            <input type="text" class="form-control" name="rentitle" th:value="${dto.rentitle}">
                         </div>
 
                         <div class="input-group mb-3">
-                            <span class="input-group-text">Content</span>
-                            <textarea class="form-control col-sm-5" rows="5" name="content">[[${dto.content}]]</textarea>
+                            <span class="input-group-text">rencontent</span>
+                            <textarea class="form-control col-sm-5" rows="5" name="rencontent">[[${dto.rencontent}]]</textarea>
                         </div>
 
                         <div class="input-group mb-3">
@@ -136,7 +136,7 @@
         e.preventDefault()
         e.stopPropagation()
 
-        formObj.action = `/board/modify?${link}`
+        formObj.action = `/renboard/modify?${link}`
 
         //첨부파일 추가
         appendFileData()
@@ -203,7 +203,7 @@
         //화면에서 안보이도록 처리된 파일들을 form태그에 추가
         appendNotShownData()
 
-        formObj.action = `/board/remove`
+        formObj.action = `/renboard/remove`
         formObj.method ='post'
         formObj.submit()
     }, false)
@@ -213,7 +213,7 @@
         e.stopPropagation()
 
         formObj.reset()
-        self.location =`/board/list?${link}`
+        self.location =`/renboard/list?${link}`
 
     }, false)
 
