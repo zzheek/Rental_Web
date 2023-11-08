@@ -75,10 +75,11 @@
             </div>
         </div>
 
-<!--        <div sec:authorize="isAuthenticated()">-->
-<!--            <p>사용자 이름: <span th:text="${#authentication.principal.username}"></span></p>-->
-<!--            <p>사용자 이메일: <span th:text="${#authentication.principal.memberemail}"></span></p>-->
-<!--        </div>-->
+        <div sec:authorize="isAuthenticated()">
+            <p>사용자 이름: <span th:text="${#authentication.principal.username}"></span></p>
+            <p>사용자 이메일: <span th:text="${#authentication.principal.memberemail}"></span></p>
+            <p>사용자 : <span th:text="${#authentication.principal}"></span></p>
+        </div>
 
 
 

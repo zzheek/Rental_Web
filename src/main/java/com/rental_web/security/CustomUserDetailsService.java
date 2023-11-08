@@ -41,7 +41,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         Member member = result.get();
 
         // 사용자의 권한 정보를 가져와 "ROLE_" 접두사를 추가한 후 SimpleGrantedAuthority로 변환
-        Set<SimpleGrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_" + member.getMemberid()));
+        //Set<SimpleGrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_" + member.getMemberid()));
 
         MemberSecurityDTO memberSecurityDTO =
                 new MemberSecurityDTO(

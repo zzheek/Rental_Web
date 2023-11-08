@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8' />
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/main.css" rel="stylesheet" />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+    <style>
+        /* 모달 스타일 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover, .close:focus {
+            color: black;
+        }
+    </style>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'timeGridWeek',
+                nowIndicator: true,
+                height: 600,
+                aspectRatio: 2,
+                slotDuration: '02:00:00', // 한 슬롯의 시간 간격을 2시간으로 설정
+                slotLabelInterval: '02:00:00', // 슬롯 레이블 간격을 2시간으로 설정
+                slotLabelFormat: {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                },
+                slotMinTime: '10:00:00',
+                slotMaxTime: '18:00:00',
+                slotEventOverlap: false, // 이벤트가 겹치지 않도록 설정
+                default: true,
+                events: [
+                    {
+                        title: '10시 - 12시',
+                        start: '2023-11-08T10:00:00',
+                        end: '2023-11-08T12:00:00'
+                    },
+                    {
+                        title: '13시 - 15시',
+                        start: '2023-11-08T13:00:00',
+                        end: '2023-11-08T15:00:00'
+                    },
+                    {
+                        title: '16시 - 18시',
+                        start: '2023-11-08T16:00:00',
+                        end: '2023-11-08T18:00:00'
+                    }
+                ],
+                eventClick: function(info) {
+                    // info.event를 통해 클릭한 이벤트 정보에 접근
+                    alert('이벤트를 클릭했습니다: ' + info.event.title);
+                },
+                dateClick: function(info) {
+                    // 클릭한 슬롯의 날짜 및 시간 정보를 가져옴
+                    var clickedDate = info.date;
+                    var clickedTime = info.date.toLocaleTimeString();
+
+                    // 12시 슬롯 클릭 이벤트 처리
+                    if (clickedDate.getHours() === 12) {
+                        alert('12시 슬롯은 클릭할 수 없습니다.');
+                        return;
+                    }
+
+                    // 모달 창 열기
+                    openModal(clickedTime);
+                }
+            });
+            calendar.render();
+        });
+        function openModal(clickedTime) {
+            var modal = document.getElementById('myModal');
+            var modalContent = document.getElementById('modalContent');
+            modal.style.display = 'block';
+
+            var timeInput = document.getElementById('timeInput');
+            var authorInput = document.getElementById('authorInput');
+            var contentInput = document.getElementById('contentInput');
+            var submitButton = document.getElementById('submitButton');
+
+            // 모달 내용 초기화
+            timeInput.value = clickedTime;
+            authorInput.value = '사용자 아이디'; // 실제 사용자 아이디 가져오기
+            contentInput.value = '';
+
+            // 작성 버튼 클릭 시 이벤트 처리
+            submitButton.addEventListener('click', function() {
+                var time = timeInput.value;
+                var author = authorInput.value;
+                var content = contentInput.value;
+                // 여기서 작성한 데이터를 서버로 전송 또는 처리
+                // (AJAX 요청 또는 원하는 방식으로 데이터를 저장)
+                alert('작성 시간: ' + time + '\n글쓴이: ' + author + '\n내용: ' + content);
+                closeModal();
+            });
+        }
+
+        function closeModal() {
+            var modal = document.getElementById('myModal');
+            modal.style.display = 'none';
+        }
+    </script>
+</head>
+<body>
+<div id='calendar'></div>
+<!-- 모달 창 -->
+<div id='myModal' class='modal'>
+    <div class='modal-content'>
+        <span class='close' onclick='closeModal()'>&times;</span>
+        <div id='modalContent'>
+            <label for='timeInput'>시간:</label>
+            <input type='text' id='timeInput' disabled><br>
+            <label for='authorInput' th:with="username=${#authentication.principal.username}">글쓴이:</label>
+            <input type='text' id='authorInput' th:value="${username}" disabled><br>
+            <label for='contentInput'>내용:</label>
+            <textarea id='contentInput' rows='4' cols='50'></textarea><br>
+            <button id='submitButton'>작성</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

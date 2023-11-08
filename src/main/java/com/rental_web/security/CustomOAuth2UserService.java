@@ -53,7 +53,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         }
 
 
-        return oAuth2User;
+        return generateDTO(email, paramMap);
     }
 
     private MemberSecurityDTO generateDTO(String memberemail, Map<String, Object> params) {
@@ -78,7 +78,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
             //MemberSecurityDTO 구성 및 반환
             MemberSecurityDTO memberSecurityDTO =
-                    new MemberSecurityDTO(memberemail,
+                    new MemberSecurityDTO(
+                            memberemail,
                             "1111",
                             "",
                             memberemail,

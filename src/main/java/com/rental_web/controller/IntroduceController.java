@@ -27,11 +27,15 @@ import java.util.NoSuchElementException;
 public class IntroduceController {
 
     @GetMapping("/introduce")
-    public void introduce(Model model, Authentication authentication){
+    public void introduce() throws NullPointerException {
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        model.addAttribute("author", userDetails.getUsername());
-        model.addAttribute("pass",userDetails.getPassword());
+//        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+//        model.addAttribute("author", userDetails.getUsername());
+//        model.addAttribute("pass",userDetails.getPassword());
+//        log.info("========================authentication.isAuthenticated()================================");
+//        log.info(authentication);
+//        log.info("========================((UserDetails) authentication.getPrincipal()).getAuthorities()================================");
+//        log.info(((UserDetails) authentication.getPrincipal()).getAuthorities());
 
     }
 
