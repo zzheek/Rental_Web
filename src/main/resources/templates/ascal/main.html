@@ -126,7 +126,7 @@
                 sendDataToServer(time, author, content);
 
                 // 여기서 작성한 데이터를 서버로 전송 또는 처리
-                function sendDataToServer(author,time,content) {
+                function sendDataToServer(time,author,content) {
                     var xhr = new XMLHttpRequest();
                     var url = "/ascal"; // 실제 서버 엔드포인트 URL로 수정해야 함
 
@@ -134,8 +134,8 @@
                     xhr.setRequestHeader("Content-Type", "application/json");
 
                     var data = JSON.stringify({
-                        ascalwriter: author,
                         ascaltime: time,
+                        ascalwriter: author,
                         ascalText: content
                     });
 
