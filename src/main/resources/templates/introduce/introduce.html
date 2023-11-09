@@ -18,11 +18,6 @@
         <div th:replace="fragment/nav :: navFragment"></div>
 
 
-        <div class="input-group mb-3" th:with="username=${#authentication.principal.username}">
-            <input type="text" name="writer" class="form-control" placeholder="Writer" th:value="${username}" readonly>
-        </div>
-
-
 
         <!-- Page Content-->
         <div class="content" align="center">

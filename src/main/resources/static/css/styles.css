@@ -2965,8 +2965,8 @@ textarea.form-control-lg {
 
 .btn-dark {
   --bs-btn-color: #fff;
-  --bs-btn-bg: #212529;
-  --bs-btn-border-color: #212529;
+  --bs-btn-bg: rgba(33, 37, 41, 0.7);
+  //--bs-btn-border-color: #212529;
   --bs-btn-hover-color: #fff;
   --bs-btn-hover-bg: #424649;
   --bs-btn-hover-border-color: #373b3e;
@@ -10846,7 +10846,7 @@ textarea.form-control-lg {
 @media (min-width: 992px) {
   .social-icons {
     position: absolute;
-    height: 90%;
+    height: 92%;
     bottom: 0;
     right: 2.5rem;
     width: auto;
