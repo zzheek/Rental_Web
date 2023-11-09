@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/basic.html}">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+      layout:decorate="~{layout/basic.html}"
+>
 
 <head>
     <title>Board Register</title>
@@ -26,10 +28,9 @@
                             <textarea class="form-control col-sm-5" rows="5" name="rencontent"></textarea>
                         </div>
 
-                        <div class="input-group mb-3">
+                        <div class="input-group mb-3" th:with="username=${#authentication.principal.username}">
                             <span class="input-group-text">Writer</span>
-                            <input type="text" name="renwriter" class="form-control" placeholder="Writer" th:value="${username}">
-
+                            <input type="text" name="renwriter" class="form-control" placeholder="Writer" th:value="${username}" readonly>
                         </div>
 
                         <div class="input-group mb-3">
@@ -92,6 +93,19 @@
 
 <script layout:fragment="script" th:inline="javascript">
 
+    const auth = [[${#authentication.principal}]]
+
+    const errors = [[${errors}]]
+    console.log(errors)
+
+    let errorMsg = ''
+
+    if(errors){
+        for (let i = 0; i < errors.length; i++) {
+            errorMsg += `${errors[i].field}은(는) ${errors[i].code} \n`
+        }
+        alert(errorMsg)
+    }
 
 
 
