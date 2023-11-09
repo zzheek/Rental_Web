@@ -30,11 +30,11 @@ public class AscalController {
     private final AscalService ascalService;
 
     @GetMapping("/main")
-    public String main(Model model) {
-        List<AscalDTO> events = ascalService.getAllEvents();
-
-        model.addAttribute("events",events);
-        return "/";
+    public void main() {
+//        List<AscalDTO> events = ascalService.getAllEvents();
+//
+//        model.addAttribute("events",events);
+//        return "/";
     }
     @PostMapping
     public Map<String, Long> register(
@@ -53,11 +53,6 @@ public class AscalController {
 
         resultMap.put("ascalnum", ascalnum);
 
-        log.info("CT@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
-        log.info(ascalnum);
-        log.info("CT@resultMap@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        log.info(resultMap);
 
         return resultMap;
     }
