@@ -6,7 +6,6 @@
 
 <head>
     <meta charset='utf-8' />
-    <link href="../css/styles.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/main.css" rel="stylesheet" />
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
     <style>
@@ -43,10 +42,13 @@
 
     <script layout:fragment="script" th:inline="javascript">
 
+        var events = [[${events}]] // 모델에 태워온 DTO
+
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'timeGridWeek',
+                //풀캘린더 설정
+                initialView: 'timeGridWeek', //타임그리드
                 nowIndicator: true,
                 height: 600,
                 aspectRatio: 2,
@@ -56,27 +58,12 @@
                     hour: '2-digit',
                     minute: '2-digit'
                 },
-                slotMinTime: '10:00:00',
-                slotMaxTime: '18:00:00',
+                slotMinTime: '10:00:00',    //시작시간
+                slotMaxTime: '18:00:00',    //끝나는시간
                 slotEventOverlap: false, // 이벤트가 겹치지 않도록 설정
                 default: true,
-                events: [
-                    {
-                        title: '10시 - 12시',
-                        start: '2023-11-08T10:00:00',
-                        end: '2023-11-08T12:00:00'
-                    },
-                    {
-                        title: '13시 - 15시',
-                        start: '2023-11-08T13:00:00',
-                        end: '2023-11-08T15:00:00'
-                    },
-                    {
-                        title: '16시 - 18시',
-                        start: '2023-11-08T16:00:00',
-                        end: '2023-11-08T18:00:00'
-                    }
-                ],
+                events: events,
+
                 eventClick: function(info) {
                     // info.event를 통해 클릭한 이벤트 정보에 접근
                     alert('이벤트를 클릭했습니다: ' + info.event.title);
@@ -84,7 +71,7 @@
                 dateClick: function(info) {
                     // 클릭한 슬롯의 날짜 및 시간 정보를 가져옴
                     var clickedDate = info.date;
-                    var clickedTime = info.date.toLocaleTimeString();
+                    var clickedTime = formatDateAndTime(clickedDate);
 
                     // 12시 슬롯 클릭 이벤트 처리
                     if (clickedDate.getHours() === 12) {
@@ -98,6 +85,21 @@
             });
             calendar.render();
         });
+        //데이터를  yyyy-MM-dd HH:mm:ss 형식으로
+        function formatDateAndTime(date){
+            var year =plusZero(date.getFullYear());
+            var month = plusZero(date.getMonth() +1);
+            var day = plusZero(date.getDate());
+            var hours = plusZero(date.getHours());
+            var minutes = plusZero(date.getMinutes());
+            var seconds = plusZero(date.getSeconds());
+
+            return year+'-'+month+'-'+day+'T'+hours+':'+minutes+':'+ seconds;
+        }
+        //시간이 01 이라면 앞에 0일 붙여줌
+        function plusZero(value) {
+            return (value < 10 ? '0' : '') + value;
+        }
         function openModal(clickedTime) {
             var modal = document.getElementById('myModal');
             var modalContent = document.getElementById('modalContent');
@@ -119,28 +121,41 @@
                 var author = authorInput.value;
                 var content = contentInput.value;
 
-                var ascalObj = {
-                    //ascalnum: ascalnum,
-                    ascaltime: time,
-                    ascalwriter: author,
-                    ascalText: content
-                }
-                addAscal(ascalObj).then(result => {
-                    alert(result.ascalnum)
-
-                })
-
-                async function addAscal(ascalObj) {
-                    const response = await axios.post(`/ascal/`, ascalObj);
-                    return response.data;
-                }
-
+                sendDataToServer(time, author, content);
 
                 // 여기서 작성한 데이터를 서버로 전송 또는 처리
+                function sendDataToServer(author,time,content) {
+                    var xhr = new XMLHttpRequest();
+                    var url = "/ascal"; // 실제 서버 엔드포인트 URL로 수정해야 함
+
+                    xhr.open("POST", url, true);
+                    xhr.setRequestHeader("Content-Type", "application/json");
+
+                    var data = JSON.stringify({
+                        ascalwriter: author,
+                        ascaltime: time,
+                        ascalText: content
+                    });
+
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4) {
+                            if (xhr.status === 200) {
+                                // 서버에서 응답을 받았을 때 원하는 동작 수행
+                                console.log("서버 응답:", xhr.responseText);
+                                closeModal(); // 모달 닫기 또는 다른 작업 수행
+                            } else {
+                                // 서버 요청 실패 처리
+                                console.error("서버 요청 실패:", xhr.status, xhr.statusText);
+                            }
+                        }
+                    };
+
+                    xhr.send(data);
+                }
                 // (AJAX 요청 또는 원하는 방식으로 데이터를 저장)
                 alert('작성 시간: ' + time + '\n글쓴이: ' + author + '\n내용: ' + content);
                 closeModal();
-            });
+            }, false);
         }
 
 
@@ -165,7 +180,7 @@
             <label for='timeInput'>시간:</label>
             <input type='text' id='timeInput' disabled><br>
             <label for='authorInput' >글쓴이:</label>
-            <input type='text' id='authorInput'></p>
+            <input type='text' id='authorInput' th:value="${#authentication.principal.username}" disabled></p>
             <label for='contentInput'>내용:</label>
             <textarea id='contentInput' rows='4' cols='50'></textarea><br>
             <button type="submit" id='submitButton' class="submitButton">작성</button>
