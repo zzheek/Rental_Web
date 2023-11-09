@@ -3,6 +3,7 @@ package com.rental_web.controller;
 import com.rental_web.domain.Member;
 import com.rental_web.dto.MemberJoinDTO;
 import com.rental_web.security.dto.MemberSecurityDTO;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -50,5 +51,10 @@ public class IntroduceController {
         errorMap.put("time", ""+System.currentTimeMillis());
         errorMap.put("msg",  "No Such Element Exception");
         return ResponseEntity.badRequest().body(errorMap);
+    }
+
+    @GetMapping("product")
+    public void product() throws NullPointerException{
+
     }
 }
