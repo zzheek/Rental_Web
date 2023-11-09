@@ -11,4 +11,6 @@ public interface AscalService {
 
     List<AscalDTO> getAllEvents();
 
+    List<AscalDTO> findAll();
+
 }

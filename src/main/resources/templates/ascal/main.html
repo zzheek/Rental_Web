@@ -2,12 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
-      >
+>
 
 <head>
     <meta charset='utf-8' />
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/main.css" rel="stylesheet" />
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+    <link href="../css/styles.css" rel="stylesheet" />
     <style>
         /* 모달 스타일 */
         .modal {
@@ -39,10 +40,7 @@
             color: black;
         }
     </style>
-
     <script layout:fragment="script" th:inline="javascript">
-
-        var events = [[${events}]] // 모델에 태워온 DTO
 
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
@@ -62,7 +60,18 @@
                 slotMaxTime: '18:00:00',    //끝나는시간
                 slotEventOverlap: false, // 이벤트가 겹치지 않도록 설정
                 default: true,
-                events: events,
+
+                events: [
+                    {
+                        /*[# th:each="ascal : ${ascalList}"]*/
+
+                        title: /*[[${ascal.ascalText}]]*/,
+                        start: /*[[${ascal.ascalwriter}]]*/,
+                        end: /*[[${ascal.ascalwriter}]]*/,
+
+                        /*[/]*/
+                    }
+                ],
 
                 eventClick: function(info) {
                     // info.event를 통해 클릭한 이벤트 정보에 접근
@@ -82,6 +91,7 @@
                     // 모달 창 열기
                     openModal(clickedTime);
                 }
+
             });
             calendar.render();
         });
@@ -112,7 +122,7 @@
 
             // 모달 내용 초기화
             timeInput.value = clickedTime;
-             //authorInput.value = '${#authentication.principal.username}'; // 실제 사용자 아이디 가져오기
+            //authorInput.value = '${#authentication.principal.username}'; // 실제 사용자 아이디 가져오기
             contentInput.value = '';
 
             // 작성 버튼 클릭 시 이벤트 처리
@@ -164,6 +174,7 @@
             var modal = document.getElementById('myModal');
             modal.style.display = 'none';
         }
+
     </script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
@@ -179,11 +190,11 @@
         <div id='modalContent'>
             <label for='timeInput'>시간:</label>
             <input type='text' id='timeInput' disabled><br>
-            <label for='authorInput' >글쓴이:</label>
-            <input type='text' id='authorInput' th:value="${#authentication.principal.username}" disabled></p>
+            <label for='authorInput'>글쓴이:</label>
+            <input type='text' id='authorInput' th:value="${#authentication.principal.username}" disabled>
             <label for='contentInput'>내용:</label>
             <textarea id='contentInput' rows='4' cols='50'></textarea><br>
-            <button type="submit" id='submitButton' class="submitButton">작성</button>
+            <button type="button" id='submitButton' class="submitButton">작성</button>
         </div>
     </div>
 
