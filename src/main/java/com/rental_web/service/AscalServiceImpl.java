@@ -25,7 +25,6 @@ public class AscalServiceImpl implements AscalService {
         Ascal ascal = modelMapper.map(ascalDTO, Ascal.class);
 
         Long ascalnum = ascalRepository.save(ascal).getAscalnum();
-        log.info("IMPL@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         log.info(ascal);
 
         return ascalnum;
@@ -40,5 +39,15 @@ public class AscalServiceImpl implements AscalService {
             .map(event -> modelMapper.map(event, AscalDTO.class))
             .collect(Collectors.toList());
     }
+
+    @Override
+    public List<AscalDTO> findAll() {
+        List<Ascal> allAscal = ascalRepository.findAll();
+
+        return allAscal.stream()
+                .map(ascal -> modelMapper.map(ascal, AscalDTO.class))
+                .collect(Collectors.toList());
+    }
+
 
 }
