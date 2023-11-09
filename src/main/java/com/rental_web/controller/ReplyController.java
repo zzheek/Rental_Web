@@ -1,10 +1,12 @@
 package com.rental_web.controller;
 
+
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
 import com.rental_web.dto.PageRequestDTO;
 import com.rental_web.dto.PageResponseDTO;
 import com.rental_web.dto.ReplyDTO;
 import com.rental_web.service.ReplyService;
-import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +28,7 @@ public class ReplyController {
 
     private final ReplyService replyService;
 
-    @ApiOperation(value = "Replies POST", notes = "POST 방식으로 댓글 등록")
+    //@ApiOperation(value = "Replies POST", notes = "POST 방식으로 댓글 등록")
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String,Long> register(
             @Valid @RequestBody ReplyDTO replyDTO,
@@ -66,7 +68,7 @@ public class ReplyController {
         return replyDTO;
     }
 
-    @ApiOperation(value = "Delete Reply" ,notes =  "DELETE 방식으로 특정 댓글 삭제")
+    @Operation(summary =  "DELETE 방식으로 특정 댓글 삭제")
     @DeleteMapping("/{rno}")
     public Map<String,Long> remove( @PathVariable("rno") Long rno ){
 
@@ -79,7 +81,7 @@ public class ReplyController {
         return resultMap;
     }
 
-    @ApiOperation(value = "Modify Reply" ,notes =  "PUT 방식으로 특정 댓글 수정")
+    @Operation(summary =  "PUT 방식으로 특정 댓글 수정")
     @PutMapping(value = "/{rno}", consumes = MediaType.APPLICATION_JSON_VALUE )
     public Map<String,Long> remove( @PathVariable("rno") Long rno, @RequestBody ReplyDTO replyDTO ){
 
