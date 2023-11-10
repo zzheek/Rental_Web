@@ -81,7 +81,6 @@ public class AscalController {
     public ResponseEntity<String> deleteAscal(@RequestBody String ascaltime) {
         // 여기에 삭제 로직을 구현하고, 성공 여부에 따라 응답을 반환
 
-
         if (deleteEvent(ascaltime)) {
             return ResponseEntity.ok("일정이 삭제되었습니다.");
         } else {
