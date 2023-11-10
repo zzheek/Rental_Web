@@ -18,11 +18,12 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @Log4j2
+@RequestMapping("/")
 public class IndexController {
 
     private final RenboardService renboardService;
-    @GetMapping("/index")
-    public void index(Model model) {
+    @GetMapping
+    public String index(Model model) {
 
     List<RenboardDTO> listAll = renboardService.findAll();
 
@@ -31,6 +32,6 @@ public class IndexController {
     log.info("++++++++++++++");
     log.info(listAll);
     log.info("++++++++++++++");
-
+    return "index";
     }
 }

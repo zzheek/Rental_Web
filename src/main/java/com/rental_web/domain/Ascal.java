@@ -20,6 +20,7 @@ public class Ascal {
 
     private String ascalwriter;
 
+
     private String ascaltime;
 
     private String ascalText;

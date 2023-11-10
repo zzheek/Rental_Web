@@ -13,4 +13,5 @@ public interface AscalService {
 
     List<AscalDTO> findAll();
 
+    void deleteAscal(String ascaltime);
 }
