@@ -79,7 +79,7 @@
                 <div class="marquee-wrap">
                     <div th:if="${listAll != null and not listAll.isEmpty()}">
                         <div th:each="dto: ${listAll}">
-                            <p th:text="${dto.rennum}"></p>
+                            <p th:text="${dto.rentitle}"></p>
                         </div>
                     </div>
                     <div th:unless="${listAll != null and not listAll.isEmpty()}">
