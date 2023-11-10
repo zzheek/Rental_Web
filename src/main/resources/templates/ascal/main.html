@@ -20,15 +20,19 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0,0,0,0.4);
+            background-color: rgba(0, 0, 0, 0.5); /* 반투명한 배경색 */
         }
+
         .modal-content {
             background-color: #fefefe;
-            margin: 15% auto;
+            margin: 10% auto;
             padding: 20px;
             border: 1px solid #888;
             width: 80%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+            border-radius: 10px; /* 모서리 둥글게 만들기 */
         }
+
         .close {
             color: #aaa;
             float: right;
@@ -36,10 +40,39 @@
             font-weight: bold;
             cursor: pointer;
         }
-        .close:hover, .close:focus {
+
+        .close:hover,
+        .close:focus {
             color: black;
         }
+
+        /* 입력 필드 스타일 */
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            border-radius: 5px;
+        }
+
+        /* 버튼 스타일 */
+        .submitButton {
+            background-color: #4CAF50; /* 초록색 */
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .submitButton:hover {
+            background-color: #45a049; /* 더 진한 초록색 */
+        }
     </style>
+
     <script layout:fragment="script" th:inline="javascript">
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -62,16 +95,15 @@
                 default: true,
 
                 events: [
+                    /*[# th:each="ascal : ${ascalList}"]*/
                     {
-                        /*[# th:each="ascal : ${ascalList}"]*/
-
                         title: /*[[${ascal.ascalText}]]*/,
-                        start: /*[[${ascal.ascalwriter}]]*/,
-                        end: /*[[${ascal.ascalwriter}]]*/,
-
-                        /*[/]*/
-                    }
+                        start: /*[[${ascal.ascaltime}]]*/,
+                        end: /*[[${ascal.ascaltime}]]*/,
+                    },
+                    /*[/]*/
                 ],
+
 
                 eventClick: function(info) {
                     // info.event를 통해 클릭한 이벤트 정보에 접근
@@ -93,6 +125,7 @@
                 }
 
             });
+
             calendar.render();
         });
         //데이터를  yyyy-MM-dd HH:mm:ss 형식으로
@@ -134,7 +167,7 @@
                 sendDataToServer(time, author, content);
 
                 // 여기서 작성한 데이터를 서버로 전송 또는 처리
-                function sendDataToServer(author,time,content) {
+                function sendDataToServer(time,author,content) {
                     var xhr = new XMLHttpRequest();
                     var url = "/ascal"; // 실제 서버 엔드포인트 URL로 수정해야 함
 
@@ -142,8 +175,8 @@
                     xhr.setRequestHeader("Content-Type", "application/json");
 
                     var data = JSON.stringify({
-                        ascalwriter: author,
                         ascaltime: time,
+                        ascalwriter: author,
                         ascalText: content
                     });
 
@@ -188,13 +221,13 @@
     <div class='modal-content'>
         <span class='close' onclick='closeModal()'>&times;</span>
         <div id='modalContent'>
-            <label for='timeInput'>시간:</label>
+            <label for='timeInput'>예약시간</label>
             <input type='text' id='timeInput' disabled><br>
-            <label for='authorInput'>글쓴이:</label>
-            <input type='text' id='authorInput' th:value="${#authentication.principal.username}" disabled>
-            <label for='contentInput'>내용:</label>
+            <label for='authorInput'>업체명</label>
+            <input type='text' id='authorInput' th:value="${#authentication.principal.username}" disabled><br>
+            <label for='contentInput'>예약사항</label>
             <textarea id='contentInput' rows='4' cols='50'></textarea><br>
-            <button type="button" id='submitButton' class="submitButton">작성</button>
+            <button type="button" id='submitButton' class="submitButton" text-align="center">예약하기</button>
         </div>
     </div>
 

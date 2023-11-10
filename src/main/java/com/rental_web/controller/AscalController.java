@@ -30,27 +30,6 @@ public class AscalController {
 
     private final AscalService ascalService;
 
-//    @GetMapping("/main")
-//    @ResponseBody
-//    public List<Map<String, Object>> main() {
-//        List<AscalDTO> listAll = ascalService.findAll();
-//
-//        List<Map<String, Object>> result = new ArrayList<>();
-//
-//        for (AscalDTO ascalDTO : listAll) {
-//            Map<String, Object> map = new HashMap<>();
-//            map.put("ascalnum", ascalDTO.getAscalnum());
-//            map.put("ascalwriter", ascalDTO.getAscalwriter());
-//            map.put("ascaltime", ascalDTO.getAscaltime());
-//            map.put("ascalText", ascalDTO.getAscalText());
-//
-//            result.add(map);
-//        }
-//
-//
-//        return result;
-//
-//    }
 
     @GetMapping("/main")
     public void main(Model model) {

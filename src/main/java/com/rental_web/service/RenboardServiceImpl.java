@@ -26,6 +26,16 @@ public class RenboardServiceImpl implements RenboardService{
     private final RenboardRepository renboardRepository;
 
     @Override
+    public List<RenboardDTO> findAll() {
+        List<Renboard> allRenboard = renboardRepository.findAll();
+
+        return allRenboard.stream()
+                .map(renboard -> modelMapper.map(renboard, RenboardDTO.class))
+                .collect(Collectors.toList());
+
+    }
+
+    @Override
     public Long register(RenboardDTO renboardDTO) {
 
         Renboard renboard = dtoToEntity(renboardDTO);

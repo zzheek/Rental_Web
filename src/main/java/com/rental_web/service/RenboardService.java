@@ -8,6 +8,9 @@ import java.util.stream.Collectors;
 
 public interface RenboardService {
 
+    // 롤링
+    List<RenboardDTO> findAll();
+
     Long register(RenboardDTO renboardDTO);
 
     RenboardDTO readOne(Long rennum);
