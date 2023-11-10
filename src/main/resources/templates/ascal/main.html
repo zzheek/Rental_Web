@@ -62,21 +62,77 @@
                 default: true,
 
                 events: [
+                    /*[# th:each="ascal : ${ascalList}"]*/
                     {
-                        /*[# th:each="ascal : ${ascalList}"]*/
-
-                        title: /*[[${ascal.ascalText}]]*/,
-                        start: /*[[${ascal.ascalwriter}]]*/,
-                        end: /*[[${ascal.ascalwriter}]]*/,
-
-                        /*[/]*/
-                    }
+                        title: /*[[${ascal.ascalwriter}]]*/,
+                        start: /*[[${ascal.ascaltime}]]*/,
+                        end: /*[[${ascal.ascaltime}]]*/,
+                    },
+                    /*[/]*/
                 ],
 
+                // 이벤트 클릭 핸들러를 추가하여 이벤트 정보를 표시합니다.
                 eventClick: function(info) {
-                    // info.event를 통해 클릭한 이벤트 정보에 접근
-                    alert('이벤트를 클릭했습니다: ' + info.event.title);
+                    var eventDetails = document.getElementById('eventDetails');
+                    var eventTitle = document.getElementById('eventTitle');
+                    var eventTime = document.getElementById('eventTime');
+
+                    // 모달에 이벤트 정보 설정
+                    eventTitle.textContent = '제목: ' + info.event.title;
+                    eventTime.textContent = '시간: ' + info.event.start.toLocaleString();
+
+                    // 이벤트 정보 모달을 표시
+                    eventDetails.style.display = 'block';
+
+                    var time = eventTime.textContent; // 시간 정보를 가져옴
+                    var author = eventTitle.textContent;
+
+                    var removeEventButton = document.getElementById('removeEventButton');
+                    // 이벤트 삭제 버튼에 삭제 이벤트를 추가
+                    removeEventButton.addEventListener('click', function () {
+                        // 이벤트를 삭제하는 로직을 구현해야 합니다.
+
+                        var data = JSON.stringify({
+                            ascaltime: time
+                        })
+
+                        sendRemoveDataToServer(time);
+
+                        // 여기서 읽어온 데이터를 서버로 전송 또는 처리
+                        function sendRemoveDataToServer(data) {
+                            var xhr = new XMLHttpRequest();
+                            var url = "/ascal"; // 실제 서버 엔드포인트 URL로 수정해야 함
+
+                            xhr.open("DELETE", url, true);
+
+                            xhr.onreadystatechange = function () {
+                                if (xhr.readyState === 4) {
+                                    if (xhr.status === 200) {
+                                        // 서버에서 응답을 받았을 때 원하는 동작 수행
+                                        console.log("서버 응답:", xhr.responseText);
+                                        closeModal(); // 모달 닫기 또는 다른 작업 수행
+                                    } else {
+                                        // 서버 요청 실패 처리
+                                        console.error("서버 요청 실패:", xhr.status, xhr.statusText);
+                                    }
+                                }
+                            };
+
+                            xhr.send(data);
+                        }
+                        // (AJAX 요청 또는 원하는 방식으로 데이터를 저장)
+                        alert('작성 시간: ' + time + '\n글쓴이: ' + author);
+                        closeEventDetails();
+                    });
+
+                        // info.event.id를 사용하여 이벤트를 식별하고 데이터 원본에서 삭제할 수 있습니다.
+                        // 이벤트를 삭제한 후, 이벤트 정보 모달을 닫을 수 있습니다.
+
+                        // 이벤트 정보 모달을 닫음
+                        eventDetails.style.display = 'block';
+
                 },
+                //빈 시간 클릭
                 dateClick: function(info) {
                     // 클릭한 슬롯의 날짜 및 시간 정보를 가져옴
                     var clickedDate = info.date;
@@ -95,7 +151,8 @@
             });
             calendar.render();
         });
-        //데이터를  yyyy-MM-dd HH:mm:ss 형식으로
+
+        //데이터를  yyyy-MM-dd HH:mm:ss 형식으로 변환하는 함수
         function formatDateAndTime(date){
             var year =plusZero(date.getFullYear());
             var month = plusZero(date.getMonth() +1);
@@ -106,10 +163,13 @@
 
             return year+'-'+month+'-'+day+'T'+hours+':'+minutes+':'+ seconds;
         }
-        //시간이 01 이라면 앞에 0일 붙여줌
+
+        //시간이 01 이라면 앞에 0일 붙여주는 함수
         function plusZero(value) {
             return (value < 10 ? '0' : '') + value;
         }
+
+        //작성 모달창
         function openModal(clickedTime) {
             var modal = document.getElementById('myModal');
             var modalContent = document.getElementById('modalContent');
@@ -125,7 +185,7 @@
             //authorInput.value = '${#authentication.principal.username}'; // 실제 사용자 아이디 가져오기
             contentInput.value = '';
 
-            // 작성 버튼 클릭 시 이벤트 처리
+            // 게시물 작성 Post
             submitButton.addEventListener('click', function(e) {
                 var time = timeInput.value;
                 var author = authorInput.value;
@@ -175,6 +235,10 @@
             modal.style.display = 'none';
         }
 
+        function closeEventDetails() {
+            var eventDetails = document.getElementById('eventDetails');
+            eventDetails.style.display = 'none';
+        }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
@@ -183,7 +247,7 @@
 <div th:replace="fragment/nav :: navFragment"></div>
 
 <div id='calendar'></div>
-<!-- 모달 창 -->
+<!--작성 모달 창 -->
 <div id='myModal' class='modal'>
     <div class='modal-content'>
         <span class='close' onclick='closeModal()'>&times;</span>
@@ -197,12 +261,23 @@
             <button type="button" id='submitButton' class="submitButton">작성</button>
         </div>
     </div>
+</div>
 
+<!--상세정보 모달창-->
+<div id='eventDetails' class='modal'>
+    <div class='modal-content'>
+        <span class='close' onclick='closeEventDetails()'>&times;</span>
+        <div id='eventDetailsContent'>
+            <h2>예약 상세</h2>
+            <p id='eventTitle'></p>
+            <p id='eventTime'></p>
+            <button id='removeEventButton'>이벤트 삭제</button>
+        </div>
+    </div>
 </div>
 
 <<!-- sidebar-->
 <div th:replace="fragment/sidebar :: sidebarFragment"></div>
-
 
 <!-- Footer-->
 <footer class="py-5 bg-dark">

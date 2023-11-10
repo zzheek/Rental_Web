@@ -7,10 +7,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 
 
 public interface AscalRepository extends JpaRepository<Ascal,Long> {
     @Query("select a from Ascal a where a.ascalnum = :ascalnum")
     Page<Reply> listOfAscal(Long ascalnum, Pageable pageable);
 
+    Optional<Ascal> findByAscaltime(String ascaltime);
+    void deleteByAscaltime(String ascaltime);
 }
