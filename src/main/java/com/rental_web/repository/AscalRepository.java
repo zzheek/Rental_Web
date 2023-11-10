@@ -11,6 +11,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface AscalRepository extends JpaRepository<Ascal,Long> {
     @Query("select a from Ascal a where a.ascalnum = :ascalnum")
-    Page<Reply> listOfAscal(Long ascalnum, Pageable pageable);
+    Page<Ascal> listOfAscal(Long ascalnum, Pageable pageable);
 
 }
