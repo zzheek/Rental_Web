@@ -73,8 +73,8 @@
   --bs-border-radius-xl: 1rem;
   --bs-border-radius-2xl: 2rem;
   --bs-border-radius-pill: 50rem;
-  --bs-link-color: #0d6efd;
-  --bs-link-hover-color: #0a58ca;
+  --bs-link-color: #212529;
+  --bs-link-hover-color: #212529;
   --bs-code-color: #d63384;
   --bs-highlight-bg: #fff3cd;
 }
@@ -246,7 +246,7 @@ sup {
 
 a {
   color: var(--bs-link-color);
-  text-decoration: underline;
+  text-decoration: none;
 }
 a:hover {
   color: var(--bs-link-hover-color);
@@ -7302,7 +7302,7 @@ textarea.form-control-lg {
 }
 
 .h-100 {
-  height: 100% !important;
+  height: 50% !important;
 
 }
 
@@ -9539,7 +9539,7 @@ textarea.form-control-lg {
     margin-bottom: auto !important;
   }
   .mt-lg-0 {
-    margin-top: 0 !important;
+    margin-top: 100px !important;
   }
   .mt-lg-1 {
     margin-top: 0.25rem !important;
@@ -10846,7 +10846,7 @@ textarea.form-control-lg {
 @media (min-width: 992px) {
   .social-icons {
     position: absolute;
-    height: 92%;
+    height: 86%;
     bottom: 0;
     right: 2.5rem;
     width: auto;

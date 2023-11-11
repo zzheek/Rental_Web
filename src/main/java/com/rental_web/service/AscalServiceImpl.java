@@ -52,10 +52,14 @@ public class AscalServiceImpl implements AscalService {
     }
 
     @Override
-    public void delete (AscalDTO ascaltime) {
-        Optional<Ascal> ascal = ascalRepository.findByAscaltime(String.valueOf(ascaltime));
-        ascalRepository.delete(ascal);
+    public void delete(AscalDTO ascalDTO) {
+        // AscalDTO에서 필요한 정보를 추출하여 엔터티를 찾음
+        Optional<Ascal> ascal = ascalRepository.findByAscaltime(ascalDTO.getAscaltime());
+
+        // 엔터티가 존재하면 삭제
+        ascal.ifPresent(ascalRepository::delete);
     }
+
 
 
 }

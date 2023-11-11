@@ -45,9 +45,10 @@ public class CustomSecurityConfig {
 
 
         http.formLogin((formLogin) -> formLogin
-                        .loginPage("/member/login"))
+                        .loginPage("/member/login"));
 
-        ;
+        http.cors();
+
 
         // SecurityContextHolder.getContext().setAuthentication(Authentication);
 

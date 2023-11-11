@@ -16,8 +16,12 @@ public interface AscalRepository extends JpaRepository<Ascal,Long> {
     Page<Ascal> listOfAscal(Long ascalnum, Pageable pageable);
 
     Optional<Ascal> findByAscaltime(String ascaltime);
+
+    // 삭제 관련 메서드 수정
     void deleteByAscaltime(String ascaltime);
 
-    @Query("delete from Ascal where ascaltime =: ascaltime")
-    void delete(Optional<Ascal> ascal);
+    // 삭제할 엔터티 직접 받도록 수정
+    default void deleteAscal(Optional<Ascal> ascal) {
+        ascal.ifPresent(this::delete);
+    }
 }
