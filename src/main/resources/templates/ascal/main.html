@@ -142,7 +142,7 @@
 
                     // 모달에 이벤트 정보 설정
                     eventTitle.textContent = '제목: ' + info.event.title;
-                    eventTime.textContent = '시간: ' + info.event.start.toLocaleString();
+                    eventTime.textContent =  formatDateAndTime(info.event.start);
 
                     // 이벤트 정보 모달을 표시
                     eventDetails.style.display = 'block';
@@ -152,40 +152,22 @@
 
                     var removeEventButton = document.getElementById('removeEventButton');
                     // 이벤트 삭제 버튼에 삭제 이벤트를 추가
+                    // 이벤트 삭제 버튼에 삭제 이벤트를 추가
                     removeEventButton.addEventListener('click', function () {
                         // 이벤트를 삭제하는 로직을 구현해야 합니다.
 
-                        var data = JSON.stringify({
-                            ascaltime: time
-                        })
+                        var time = eventTime.textContent; // 시간 정보를 가져옴
+                        var author = eventTitle.textContent;
 
-                        sendRemoveDataToServer(time);
-
-                        // 여기서 읽어온 데이터를 서버로 전송 또는 처리
-                        function sendRemoveDataToServer(data) {
-                            var xhr = new XMLHttpRequest();
-                            var url = "/ascal"; // 실제 서버 엔드포인트 URL로 수정해야 함
-
-                            xhr.open("DELETE", url, true);
-
-                            xhr.onreadystatechange = function () {
-                                if (xhr.readyState === 4) {
-                                    if (xhr.status === 200) {
-                                        // 서버에서 응답을 받았을 때 원하는 동작 수행
-                                        console.log("서버 응답:", xhr.responseText);
-                                        closeModal(); // 모달 닫기 또는 다른 작업 수행
-                                    } else {
-                                        // 서버 요청 실패 처리
-                                        console.error("서버 요청 실패:", xhr.status, xhr.statusText);
-                                    }
-                                }
-                            };
-
-                            xhr.send(data);
-                        }
-                        // (AJAX 요청 또는 원하는 방식으로 데이터를 저장)
-                        alert('작성 시간: ' + time + '\n글쓴이: ' + author);
-                        closeEventDetails();
+                        // 서버로 삭제 요청을 보냄
+                        axios.delete('/ascal/' + time)
+                            .then(function (response) {
+                                console.log('서버 응답:', response.data);
+                                closeEventDetails(); // 모달 닫기 또는 다른 작업 수행
+                            })
+                            .catch(function (error) {
+                                console.error('서버 요청 실패:', error);
+                            });
                     });
 
                         // info.event.id를 사용하여 이벤트를 식별하고 데이터 원본에서 삭제할 수 있습니다.

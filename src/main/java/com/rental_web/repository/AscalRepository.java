@@ -17,4 +17,7 @@ public interface AscalRepository extends JpaRepository<Ascal,Long> {
 
     Optional<Ascal> findByAscaltime(String ascaltime);
     void deleteByAscaltime(String ascaltime);
+
+    @Query("delete from Ascal where ascaltime =: ascaltime")
+    void delete(Optional<Ascal> ascal);
 }
