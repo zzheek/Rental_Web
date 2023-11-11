@@ -77,18 +77,18 @@ public class AscalController {
 //        }
 //    }
 
-    @DeleteMapping
-    public ResponseEntity<String> deleteAscal(@RequestBody String ascaltime) {
-        // 여기에 삭제 로직을 구현하고, 성공 여부에 따라 응답을 반환
 
-        if (deleteEvent(ascaltime)) {
-            return ResponseEntity.ok("일정이 삭제되었습니다.");
-        } else {
+    @DeleteMapping("/{ascaltime}")
+    public ResponseEntity<String> deleteAscal(@PathVariable String ascaltime) {
+        try {
+            // 시간 정보를 기반으로 Ascal을 찾아 삭제
+            AscalDTO ascalDTO = new AscalDTO();
+            ascalDTO.setAscaltime(ascaltime);
+            ascalService.delete(ascalDTO);
+            return ResponseEntity.ok("이벤트가 삭제되었습니다.");
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이벤트 삭제 중 오류가 발생했습니다.");
         }
     }
-
-
-
 
 }

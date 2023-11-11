@@ -52,18 +52,9 @@ public class AscalServiceImpl implements AscalService {
     }
 
     @Override
-    public void deleteAscal(String ascaltime) {
-        Optional<Ascal> optionalAscal = ascalRepository.findByAscaltime(ascaltime);
-        optionalAscal.ifPresent(ascal -> ascalRepository.delete(ascal));
-    }
-    // Entity를 DTO로 변환하는 메서드
-    private AscalDTO convertToDTO(Ascal ascal) {
-        AscalDTO ascalDTO = new AscalDTO();
-        ascalDTO.setAscalnum(ascal.getAscalnum());
-        ascalDTO.setAscalwriter(ascal.getAscalwriter());
-        ascalDTO.setAscaltime(ascal.getAscaltime());
-        ascalDTO.setAscalText(ascal.getAscalText());
-        return ascalDTO;
+    public void delete (AscalDTO ascaltime) {
+        Optional<Ascal> ascal = ascalRepository.findByAscaltime(String.valueOf(ascaltime));
+        ascalRepository.delete(ascal);
     }
 
 
