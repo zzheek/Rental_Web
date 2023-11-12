@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+
 @Service
 @RequiredArgsConstructor
 @Log4j2
@@ -33,16 +34,6 @@ public class AscalServiceImpl implements AscalService {
     }
 
     @Override
-    public List<AscalDTO> getAllEvents(){
-
-    List<Ascal> events = ascalRepository.findAll();
-
-    return events.stream()
-            .map(event -> modelMapper.map(event, AscalDTO.class))
-            .collect(Collectors.toList());
-    }
-
-    @Override
     public List<AscalDTO> findAll() {
         List<Ascal> allAscal = ascalRepository.findAll();
 
@@ -58,6 +49,15 @@ public class AscalServiceImpl implements AscalService {
 
         // 엔터티가 존재하면 삭제
         ascal.ifPresent(ascalRepository::delete);
+    }
+
+    @Override
+    public List<AscalDTO> findDay() {
+        List<Ascal> dayAscal = ascalRepository.findDay();
+
+        return dayAscal.stream()
+                .map(ascal ->modelMapper.map(ascal, AscalDTO.class))
+                .collect(Collectors.toList());
     }
 
 

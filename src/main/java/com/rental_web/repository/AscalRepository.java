@@ -2,6 +2,7 @@ package com.rental_web.repository;
 
 import com.rental_web.domain.Ascal;
 import com.rental_web.domain.Reply;
+import com.rental_web.dto.AscalDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,4 +25,7 @@ public interface AscalRepository extends JpaRepository<Ascal,Long> {
     default void deleteAscal(Optional<Ascal> ascal) {
         ascal.ifPresent(this::delete);
     }
+
+    @Query("select a from Ascal a where DATE_FORMAT(a.ascaltime, '%Y-%m-%d')=CURDATE() order by a.ascaltime asc")
+    List<Ascal> findDay();
 }
