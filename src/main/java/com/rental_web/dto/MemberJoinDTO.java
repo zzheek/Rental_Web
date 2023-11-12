@@ -22,4 +22,8 @@ public class MemberJoinDTO {
     private LocalDateTime asdate;   // AS 날짜
 
     private boolean social;     // 소셜 가입 여부
+
+    public String getMemberpass() {
+        return memberpass;
+    }
 }
