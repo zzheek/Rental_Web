@@ -60,7 +60,7 @@
                     var eventTime = document.getElementById('eventTime');
 
                     // 모달에 이벤트 정보 설정
-                    eventTitle.textContent = '제목: ' + info.event.title;
+                    eventTitle.textContent = '업체명: ' + info.event.title;
                     eventTime.textContent =  formatDateAndTime(info.event.start);
 
                     // 이벤트 정보 모달을 표시
@@ -87,7 +87,7 @@
                             .catch(function (error) {
                                 console.error('서버 요청 실패:', error);
                             });
-                        alert("삭제되었습니다.");
+                        alert("예약 취소되었습니다.");
                         document.location.reload();
                     });
 
@@ -241,7 +241,7 @@
             <h2>예약 상세</h2>
             <p id='eventTitle'></p>
             <p id='eventTime'></p>
-            <button id='removeEventButton'>이벤트 삭제</button>
+            <button id='removeEventButton'>예약 취소</button>
         </div>
     </div>
 </div>

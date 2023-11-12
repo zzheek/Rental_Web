@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta name="description" content="" />
   <meta name="author" content="" />
-  <title>회원가입</title>
+  <title>개인정보수정</title>
   <!-- Favicon-->
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
   <!-- Core theme CSS (includes Bootstrap)-->
@@ -15,8 +14,8 @@
 </head>
 <style>
   .mt-5 {
-    margin-top: 100px; !important;
-    margin-bottom: 100px; !important;
+    margin-top: 100px !important;
+    margin-bottom: 100px !important;
   }
 </style>
 <body>
@@ -25,38 +24,40 @@
 
 <!-- Page Content-->
 <div class="content container mt-5">
-  <form id="registerForm" action="/member/join" method="post">
+  <form id="registerForm" th:action="@{/member/modify}" method="post">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <div class="card">
       <div class="card-body">
         <h2 class="card-title">회원가입</h2>
         <table class="table">
           <tr>
             <th>아이디</th>
-            <td><input type="text" name="memberid" placeholder="4~20자리 / 영문,숫자,특수문자 사용가능" class="form-control"></td>
+            <td><input type="text" name="memberid" class="form-control" th:value="${dto.memberid}" readonly="readonly"></td>
           </tr>
           <tr>
             <th>비밀번호</th>
-            <td><input type="password" name="memberpass" placeholder="8~16자리 영문 대소문자,숫자,특수문자" class="form-control"></td>
+            <td><input type="password" name="memberpass" class="form-control" th:value="${dto.memberpass}"></td>
           </tr>
+
           <tr>
             <th>이름</th>
-            <td><input type="text" name="membername" placeholder="이름 입력" class="form-control"></td>
+            <td><input type="text" name="membername" class="form-control" th:value="${dto.membername}" readonly="readonly"></td>
           </tr>
           <tr>
             <th>이메일</th>
-            <td><input type="email" name="memberemail" placeholder="email@rental.com" class="form-control"></td>
+            <td><input type="email" name="memberemail" class="form-control" th:value="${dto.memberemail}"></td>
           </tr>
           <tr>
             <th>전화번호</th>
-            <td><input type="tel" name="memberphone" placeholder="'-'빼고 숫자만 입력" class="form-control"></td>
+            <td><input type="tel" name="memberphone" class="form-control" th:value="${dto.memberphone}"></td>
           </tr>
           <tr>
             <th>주소</th>
-            <td><input type="text" name="memberaddr" placeholder="동까지만 입력" class="form-control"></td>
+            <td><input type="text" name="memberaddr" class="form-control" th:value="${dto.memberaddr}"></td>
           </tr>
         </table>
         <div class="button d-flex justify-content-end">
-          <button type="submit" class="btn btn-primary">회원가입</button>
+          <button type="submit" class="btn btn-primary">수정</button>
           <button type="reset" class="btn btn-secondary ml-2">취소</button>
         </div>
       </div>
@@ -70,11 +71,24 @@
 </footer>
 
 <script layout:fragment="script" th:inline="javascript">
-  const error = [[${error}]]
+  const error = '${error}';
 
-  if(error && error == 'memberid') {
-    alert("동일한 아이디가 존재합니다.")
+  if (error && error === 'memberid') {
+    alert("동일한 아이디가 존재합니다.");
   }
+
+
+  /* Thymeleaf 코드로 alert를 포함시킴 */
+  /* alert는 result가 success일 때만 뜸 */
+  /* Thymeleaf의 조건문을 사용하여 result가 존재하고 그 값이 "success"일 때 alert를 띄움 */
+  var result = /*[[${result}]]*/ null;
+  console.log("modify result :" +result)
+  if (result === "success") {
+    alert("회원 정보가 성공적으로 수정되었습니다.");
+
+    window.location.href = "/";
+  }
+
 </script>
 
 </body>
