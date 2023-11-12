@@ -14,13 +14,12 @@
 
     <script layout:fragment="script" th:inline="javascript">
 
-
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 //풀캘린더 설정
                 initialView: 'timeGridWeek', //타임그리드
-                allDaySlot: false,
+                allDaySlot:false,
                 nowIndicator: true,
                 height: 600,
                 aspectRatio: 2,
@@ -33,7 +32,15 @@
                 slotMinTime: '10:00:00',    //시작시간
                 slotMaxTime: '18:00:00',    //끝나는시간
                 slotEventOverlap: false, // 이벤트가 겹치지 않도록 설정
-                default: true,
+                weekends:false,
+                businessHours:true,
+                expandRows: true,
+                headerToolbar: {
+                    start: 'prev,next today',
+                    center: 'title',
+                    end: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+                },
+
 
                 events: [
                     /*[# th:each="ascal : ${ascalList}"]*/
@@ -90,6 +97,7 @@
                         // 이벤트 정보 모달을 닫음
                         eventDetails.style.display = 'block';
 
+
                 },
                 //빈 시간 클릭
                 dateClick: function(info) {
@@ -109,6 +117,7 @@
 
             });
             calendar.render();
+
         });
 
         //데이터를  yyyy-MM-dd HH:mm:ss 형식으로 변환하는 함수
@@ -184,8 +193,8 @@
                 // (AJAX 요청 또는 원하는 방식으로 데이터를 저장)
                 alert('작성 시간: ' + time + '\n글쓴이: ' + author + '\n내용: ' + content);
                 closeModal();
-                document.location.reload();
 
+                document.location.reload();
             }, false);
         }
 

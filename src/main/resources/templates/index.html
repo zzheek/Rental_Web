@@ -112,13 +112,25 @@
                         <div class="card-footer"><a class="btn btn-primary btn-sm" href="introduce/introduce">자세히 알아보기</a></div>
                     </div>
                 </div>
+                <!--오늘의 A/S 일정-->
                 <div class="col-md-4 mb-5">
                     <div class="card h-100">
-                        <div class="card-body">
+                        <div class="card-body" >
                             <h2 class="card-title">오늘의 A/S 일정</h2>
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod tenetur ex natus at dolorem enim! Nesciunt pariatur voluptatem sunt quam eaque, vel, non in id dolore voluptates quos eligendi labore.</p>
+                            <p class="card-text">
+                            <div th:if="${ListAscal != null and not ListAscal.isEmpty()}">
+                                <div th:each="asdto: ${ListAscal}">
+                                    <span th:text="${asdto.ascaltime}"> </span>
+                                    <span th:text="${asdto.ascalwriter}"> </span>
+                                </div>
+                            </div>
+                            <div th:unless="${ListAscal != null and not ListAscal.isEmpty()}">
+                                오늘의 예약된 일정이 없습니다.
+                            </div>
+
+                            </p>
                         </div>
-                        <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">자세히 알아보기</a></div>
+                        <div class="card-footer"><a class="btn btn-primary btn-sm" href="/ascal/main">자세히 알아보기</a></div>
                     </div>
                 </div>
             </div>
