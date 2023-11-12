@@ -7302,7 +7302,7 @@ textarea.form-control-lg {
 }
 
 .h-100 {
-  height: 50% !important;
+  height: 100% !important;
 
 }
 
@@ -9539,7 +9539,7 @@ textarea.form-control-lg {
     margin-bottom: auto !important;
   }
   .mt-lg-0 {
-    margin-top: 100px !important;
+    margin-top: 0 !important;
   }
   .mt-lg-1 {
     margin-top: 0.25rem !important;
@@ -10846,7 +10846,7 @@ textarea.form-control-lg {
 @media (min-width: 992px) {
   .social-icons {
     position: absolute;
-    height: 86%;
+    height: 78%;
     bottom: 0;
     right: 2.5rem;
     width: auto;
@@ -11137,3 +11137,4 @@ textarea.form-control-lg {
     border-radius: 0;
   }
 }
+
