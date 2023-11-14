@@ -25,34 +25,47 @@
 
 <!-- Page Content-->
 <div class="content container mt-5">
-  <form id="registerForm" action="/member/join" method="post">
+  <form id="registerForm" action="/member/join" method="post" th:object="${memberJoinDTO}">
     <div class="card">
       <div class="card-body">
         <h2 class="card-title">회원가입</h2>
         <table class="table">
           <tr>
             <th>아이디</th>
-            <td><input type="text" name="memberid" placeholder="4~20자리 / 영문,숫자,특수문자 사용가능" class="form-control"></td>
+            <td>
+              <input type="text" th:field="*{memberid}" placeholder="4~20자리 / 영문,숫자,특수문자 사용가능" class="form-control" required>
+              <span th:errors="*{memberid}" class="text-danger"></span>
+            </td>
           </tr>
           <tr>
             <th>비밀번호</th>
-            <td><input type="password" name="memberpass" placeholder="8~16자리 영문 대소문자,숫자,특수문자" class="form-control"></td>
+            <td><input type="password" th:field="*{memberpass}" placeholder="8~16자리 / 영문 소문자,숫자,특수문자 사용" class="form-control" required>
+            <span th:errors="*{memberpass}" class="text-danger"></span>
+            </td>
           </tr>
           <tr>
             <th>이름</th>
-            <td><input type="text" name="membername" placeholder="이름 입력" class="form-control"></td>
+            <td><input type="text" th:field="*{membername}" placeholder="이름 입력" class="form-control" required>
+            <span th:errors="*{membername}" class="text-danger"></span>
+            </td>
           </tr>
           <tr>
             <th>이메일</th>
-            <td><input type="email" name="memberemail" placeholder="email@rental.com" class="form-control"></td>
+            <td><input type="email" th:field="*{memberemail}" placeholder="email@rental.com" class="form-control" required>
+            <span th:errors="*{memberemail}" class="text-danger"></span>
+            </td>
           </tr>
           <tr>
             <th>전화번호</th>
-            <td><input type="tel" name="memberphone" placeholder="'-'빼고 숫자만 입력" class="form-control"></td>
+            <td><input type="tel" th:field="*{memberphone}" placeholder="'-'빼고 숫자만 입력" class="form-control" required>
+            <span th:errors="*{memberphone}" class="text-danger"></span>
+            </td>
           </tr>
           <tr>
             <th>주소</th>
-            <td><input type="text" name="memberaddr" placeholder="동까지만 입력" class="form-control"></td>
+            <td><input type="text" th:field="*{memberaddr}" placeholder="동까지만 입력" class="form-control" required>
+            <span th:errors="*{memberaddr}" class="text-danger"></span>
+            </td>
           </tr>
         </table>
         <div class="button d-flex justify-content-end">
@@ -76,6 +89,7 @@
     alert("동일한 아이디가 존재합니다.")
   }
 </script>
+
 
 </body>
 </html>

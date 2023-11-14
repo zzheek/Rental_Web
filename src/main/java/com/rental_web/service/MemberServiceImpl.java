@@ -4,11 +4,18 @@ import com.rental_web.domain.Member;
 import com.rental_web.domain.MemberRole;
 import com.rental_web.dto.MemberJoinDTO;
 import com.rental_web.repository.MemberRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.internal.Errors;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Log4j2
 @Service
@@ -21,6 +28,18 @@ public class MemberServiceImpl implements MemberService{
 
     private final PasswordEncoder passwordEncoder;
 
+
+    @Override
+    public Map<String, String> validateHandling(BindingResult bindingResult) {
+        Map<String, String> validatorResult = new HashMap<>();
+
+        /* 유효성 검사에 실패한 필드 목록을 받음 */
+        for (FieldError error : bindingResult.getFieldErrors()) {
+            String validKeyName = "valid_" + error.getField();
+            validatorResult.put(validKeyName, error.getDefaultMessage());
+        }
+        return validatorResult;
+    }
 
     @Override
     public void join(MemberJoinDTO memberJoinDTO) throws MemberIdExistException {
@@ -80,5 +99,8 @@ public class MemberServiceImpl implements MemberService{
             super(message);
         }
     }
+
+
+
 
 }
