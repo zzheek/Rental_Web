@@ -19,7 +19,7 @@
 <!-- For more icon options, visit https://fontawesome.com/icons?d=gallery&p=2&s=brands-->
 <div th:fragment="sidebarFragment">
     <div class="social-icons">
-        <div class="d-flex flex-row flex-lg-column justify-content-center align-items-center h-100 mt-3 mt-lg-0">
+        <div class="d-flex flex-row flex-lg-column justify-content-center align-items-center  mt-3 mt-lg-0">
             <a class="btn btn-dark m-3" sec:authorize="isAuthenticated()" href="/logout"><i class="fab fa-twitter">로그아웃</i></a>
             <a class="btn btn-dark m-3" sec:authorize="isAnonymous()" href="../member/login"><i class="fab fa-twitter">로그인</i></a>
             <a class="btn btn-dark m-3" sec:authorize="isAuthenticated()" href="../member/modify"><i class="fab fa-facebook-f">개인정보수정</i></a>

@@ -5,20 +5,24 @@ import com.rental_web.dto.MemberJoinDTO;
 import com.rental_web.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.modelmapper.internal.Errors;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/member")
@@ -50,20 +54,33 @@ public class MemberController {
     }
 
     @GetMapping("/join")
-    public void joinGET(String error, String logout) {
+    public void joinGET(String error, String logout, Model model) {
         log.info("join get.....");
+        model.addAttribute("memberJoinDTO", new MemberJoinDTO()); // 이 부분을 추가
 
     }
 
     @PostMapping("/join")
-    public String joinPOST(MemberJoinDTO memberJoinDTO, RedirectAttributes redirectAttributes) {
-        log.info("join post.....");
+    public String joinPOST(@Valid  MemberJoinDTO memberJoinDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors()) {
+            // 유효성 검사 에러가 있을 경우
+//            model.addAttribute("error", "입력값을 다시 확인해주세요.");
+            model.addAttribute("memberJoinDTO", memberJoinDTO); // 입력 데이터를 모델에 추가
+
+            Map<String, String> validatorResult = memberService.validateHandling(bindingResult);
+                for (String key : validatorResult.keySet()) {
+                    model.addAttribute(key, validatorResult.get(key));
+                }
+            return "/member/join"; // 뷰를 직접 반환
+        }
 
         try {
             memberService.join(memberJoinDTO);
         } catch (MemberService.MemberIdExistException e) {
-            redirectAttributes.addFlashAttribute("error", "memberid");
-            return "redirect:/member/join";
+            model.addAttribute("error", "memberid");
+            model.addAttribute("memberJoinDTO", memberJoinDTO); // 입력 데이터를 모델에 추가
+            return "/member/join";
         }
 
         redirectAttributes.addFlashAttribute("result", "success");
