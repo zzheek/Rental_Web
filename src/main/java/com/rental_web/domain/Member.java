@@ -61,4 +61,6 @@ public class Member{
         this.roleSet.add(memberRole);
     }
 
+    public void setMemberpass(String memberpass) {
+    }
 }

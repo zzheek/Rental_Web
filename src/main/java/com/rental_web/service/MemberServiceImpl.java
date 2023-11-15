@@ -73,9 +73,12 @@ public class MemberServiceImpl implements MemberService{
         Member existingMember = memberRepository.findById(memberid)
                 .orElseThrow(() -> new MemberNotFoundException("ID가 " + memberid + "인 회원을 찾을 수 없습니다."));
 
-        // 비밀번호를 수정하는 경우에만 인코딩
-        if (modifiedMemberDTO.getMemberpass() != null ) {
+        // 비밀번호가 수정되었는지 확인
+        if (modifiedMemberDTO.getMemberpass() != null && !modifiedMemberDTO.getMemberpass().isEmpty()) {
             existingMember.changePassword(passwordEncoder.encode(modifiedMemberDTO.getMemberpass()));
+        } else {
+            // 만약 비밀번호가 제공되지 않았다면 기존 비밀번호를 유지
+            existingMember.setMemberpass(existingMember.getMemberpass());
         }
 
         // ModelMapper를 사용하여 MemberJoinDTO의 필드를 Member 엔터티에 매핑
@@ -83,6 +86,7 @@ public class MemberServiceImpl implements MemberService{
 
         memberRepository.save(existingMember);
     }
+
 
     @Override
     public void modifyPassword(String memberid, String newPassword) {
