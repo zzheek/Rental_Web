@@ -68,7 +68,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     .memberpass(passwordEncoder.encode("1111"))
                     .membername("")
                     .memberemail(memberemail)
-                    .memberphone(01011111111L)
+                    .memberphone("")
                     .memberaddr("")
                     .asdate(null)
                     .social(true)
@@ -83,7 +83,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                             "1111",
                             "",
                             memberemail,
-                            01011111111L,
+                            "",
                             "",
                             null,
                             true,
