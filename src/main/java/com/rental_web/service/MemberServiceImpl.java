@@ -74,7 +74,7 @@ public class MemberServiceImpl implements MemberService{
                 .orElseThrow(() -> new MemberNotFoundException("ID가 " + memberid + "인 회원을 찾을 수 없습니다."));
 
         // 비밀번호를 수정하는 경우에만 인코딩
-        if (modifiedMemberDTO.getMemberpass() != null) {
+        if (modifiedMemberDTO.getMemberpass() != null ) {
             existingMember.changePassword(passwordEncoder.encode(modifiedMemberDTO.getMemberpass()));
         }
 

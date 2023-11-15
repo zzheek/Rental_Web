@@ -20,7 +20,7 @@ public class MemberSecurityDTO extends User implements OAuth2User {
     private String membername;  // 회원 이름
     private String memberpass;  // 회원 비밀번호
     private String memberemail; // 회원 이메일
-    private Long memberphone;   // 회원 전화번호
+    private String memberphone;   // 회원 전화번호
     private String memberaddr;  // 회원 주소
     private LocalDateTime asdate;   // AS 날짜
     private boolean social;     // 소셜 가입 여부
@@ -28,7 +28,7 @@ public class MemberSecurityDTO extends User implements OAuth2User {
     private Map<String, Object> props; // 소셜 로그인 정보
 
     public MemberSecurityDTO(String username, String password, String membername,
-                             String memberemail, Long memberphone, String memberaddr,
+                             String memberemail, String memberphone, String memberaddr,
                              LocalDateTime asdate, boolean social,
                              Collection<? extends GrantedAuthority> authorities){
 

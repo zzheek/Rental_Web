@@ -24,7 +24,7 @@ public class MemberJoinDTO {
     private String memberemail; // 회원 이메일
 
     @NotNull(message = "전화번호를 입력해주세요.")
-    @Pattern(regexp = "^[0-9]{11}$", message = "전화번호는 숫자만 입력해주세요.")
+    @Pattern(regexp = "^[0-9]{10,11}$", message = "전화번호는 10자리 또는 11자리 숫자만 입력해주세요.")
     private String memberphone;   // 회원 전화번호
 
     @NotBlank(message = "주소를 입력해주세요.")
@@ -37,4 +37,8 @@ public class MemberJoinDTO {
     public String getMemberpass() {
         return memberpass;
     }
+
+
+
+
 }

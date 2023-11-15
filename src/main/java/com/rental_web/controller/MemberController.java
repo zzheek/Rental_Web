@@ -97,7 +97,7 @@ public class MemberController {
 
         model.addAttribute("dto", dto);
 
-        return "/member/modify";
+        return "member/modify";
     }
 
     @PreAuthorize("isAuthenticated()")
