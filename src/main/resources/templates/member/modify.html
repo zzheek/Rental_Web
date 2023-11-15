@@ -36,7 +36,8 @@
           </tr>
           <tr>
             <th>비밀번호</th>
-            <td><input type="password" name="memberpass" class="form-control" th:value="${dto.memberpass}"></td>
+            <td><input type="password" name="memberpass" class="form-control" id="passwordInput" style="display: none;">
+            <button type="button" id="modifypass" style="display: block">비밀번호 수정</button></td>
           </tr>
           <tr>
             <th>이름</th>
@@ -88,6 +89,16 @@
     window.location.href = "/";
   }
 
+
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // 비밀번호 수정 버튼 클릭 시 비밀번호 입력 상자 표시
+    document.getElementById('modifypass').addEventListener('click', function() {
+      document.getElementById('passwordInput').style.display = 'block';
+      document.getElementById('modifypass').style.display = 'none';
+    });
+  });
 </script>
 
 </body>

@@ -91,11 +91,11 @@
                         document.location.reload();
                     });
 
-                        // info.event.id를 사용하여 이벤트를 식별하고 데이터 원본에서 삭제할 수 있습니다.
-                        // 이벤트를 삭제한 후, 이벤트 정보 모달을 닫을 수 있습니다.
+                    // info.event.id를 사용하여 이벤트를 식별하고 데이터 원본에서 삭제할 수 있습니다.
+                    // 이벤트를 삭제한 후, 이벤트 정보 모달을 닫을 수 있습니다.
 
-                        // 이벤트 정보 모달을 닫음
-                        eventDetails.style.display = 'block';
+                    // 이벤트 정보 모달을 닫음
+                    eventDetails.style.display = 'block';
 
 
                 },
@@ -144,19 +144,19 @@
             modal.style.display = 'block';
 
             var timeInput = document.getElementById('timeInput');
-            // var authorInput = document.getElementById('authorInput');
+            var authorInput = document.getElementById('authorInput');
             var contentInput = document.getElementById('contentInput');
             var submitButton = document.getElementById('submitButton');
 
             // 모달 내용 초기화
             timeInput.value = clickedTime;
-            //authorInput.value = '${#authentication.principal.username}'; // 실제 사용자 아이디 가져오기
+            authorInput.value = ''; // 실제 사용자 아이디 가져오기
             contentInput.value = '';
 
             // 게시물 작성 Post
             submitButton.addEventListener('click', function(e) {
                 var time = timeInput.value;
-                // var author = authorInput.value;
+                var author = authorInput.value;
                 var content = contentInput.value;
 
                 sendDataToServer(time, author, content);
@@ -171,7 +171,7 @@
 
                     var data = JSON.stringify({
                         ascaltime: time,
-                        // ascalwriter: author,
+                        ascalwriter: author,
                         ascalText: content
                     });
 
@@ -225,6 +225,8 @@
         <div id='modalContent'>
             <label for='timeInput'>시간</label>
             <input type='text' id='timeInput' disabled><br>
+            <label for='authorInput'>글쓴이</label>
+            <input type='text' id='authorInput' > <br>
 <!--            <label for='authorInput'>글쓴이</label>-->
 <!--            <input type='text' id='authorInput' th:value="${#authentication.principal.username}" disabled> <br>-->
             <label for='contentInput'>내용</label>
