@@ -27,7 +27,7 @@ public class Member{
 
     private String memberemail; // 회원 이메일
 
-    private Long memberphone;   // 회원 전화번호
+    private String memberphone;   // 회원 전화번호
 
     private String memberaddr;  // 회원 주소
 
@@ -47,7 +47,7 @@ public class Member{
         this.memberemail = memberemail;
     }
 
-    public void changePhone(Long memberphone) {
+    public void changePhone(String memberphone) {
         this.memberphone = memberphone;
     }
 
@@ -61,4 +61,6 @@ public class Member{
         this.roleSet.add(memberRole);
     }
 
+    public void setMemberpass(String memberpass) {
+    }
 }

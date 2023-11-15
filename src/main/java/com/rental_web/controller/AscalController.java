@@ -33,15 +33,12 @@ public class AscalController {
 
     private final AscalService ascalService;
 
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     @GetMapping("/main")
     public void main(Model model) {
 
         List<AscalDTO> listAll = ascalService.findAll();
 
-
-        log.info("+@+@+@+@+@+@+@+@+@+@+");
-        log.info(listAll);
 
         model.addAttribute("ascalList", listAll);
 
