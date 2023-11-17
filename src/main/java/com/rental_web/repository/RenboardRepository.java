@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface RenboardRepository extends JpaRepository<Renboard, Long>, RenboardSearch {
 
-    @EntityGraph(attributePaths = {"imageSet"})
+    @EntityGraph(attributePaths = {"imageSet"}) // imageSet을 함께 로딩
     @Query(value = "select r from Renboard r where r.rennum = :rennum")
     Optional<Renboard> findByIdWithImages(Long rennum);
 }

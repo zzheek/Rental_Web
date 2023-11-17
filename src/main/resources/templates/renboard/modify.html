@@ -12,50 +12,50 @@
         <div class="col">
             <div class="card">
                 <div class="card-header">
-                    renboard Modify
+                    렌탈 업체 수정
                 </div>
                 <div class="card-body">
                     <form th:action="@{/templates/renboard/modify}" method="post" id="f1">
                         <div class="input-group mb-3">
-                            <span class="input-group-text">rennum</span>
+                            <span class="input-group-text">No</span>
                             <input type="text" class="form-control" th:value="${dto.rennum}" name="rennum" readonly>
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">rentitle</span>
+                            <span class="input-group-text">업체명</span>
                             <input type="text" class="form-control" name="rentitle" th:value="${dto.rentitle}">
                         </div>
 
                         <div class="input-group mb-3">
-                            <span class="input-group-text">rencontent</span>
+                            <span class="input-group-text">설명</span>
                             <textarea class="form-control col-sm-5" rows="5" name="rencontent">[[${dto.rencontent}]]</textarea>
                         </div>
 
                         <div class="input-group mb-3">
-                            <span class="input-group-text">Writer</span>
+                            <span class="input-group-text">관리자</span>
                             <input type="text" class="form-control" th:value="${dto.renwriter}" name="renwriter" readonly>
                         </div>
 
                         <div class="input-group mb-3">
-                            <span class="input-group-text">Images</span>
+                            <span class="input-group-text">이미지</span>
                             <div class="float-end uploadHidden">
                                 <button type="button" class="btn btn-primary uploadFileBtn">ADD Files</button>
                             </div>
                         </div>
 
                         <div class="input-group mb-3">
-                            <span class="input-group-text">RegDate</span>
+                            <span class="input-group-text">등록일자</span>
                             <input type="text" class="form-control" th:value="${#temporals.format(dto.regDate, 'yyyy-MM-dd HH:mm:ss')}" readonly>
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">ModDate</span>
+                            <span class="input-group-text">수정일자</span>
                             <input type="text" class="form-control" th:value="${#temporals.format(dto.modDate, 'yyyy-MM-dd HH:mm:ss')}" readonly>
                         </div>
 
                         <div class="my-4">
                             <div class="float-end">
-                                <button type="button" class="btn btn-primary listBtn">List</button>
-                                <button type="button" class="btn btn-secondary modBtn">Modify</button>
-                                <button type="button" class="btn btn-danger removeBtn">Remove</button>
+                                <button type="button" class="btn btn-primary listBtn">목록</button>
+                                <button type="button" class="btn btn-secondary modBtn">수정</button>
+                                <button type="button" class="btn btn-danger removeBtn">삭제</button>
                             </div>
                         </div>
                     </form>
