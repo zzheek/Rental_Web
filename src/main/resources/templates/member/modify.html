@@ -28,7 +28,7 @@
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <div class="card">
       <div class="card-body">
-        <h2 class="card-title">회원가입</h2>
+        <h2 class="card-title">정보 수정</h2>
         <table class="table">
           <tr>
             <th>아이디</th>
@@ -41,7 +41,7 @@
           </tr>
           <tr>
             <th>이름</th>
-            <td><input type="text" name="membername" class="form-control" th:value="${dto.membername}" readonly="readonly"></td>
+            <td><input type="text" name="membername" class="form-control" th:value="${dto.membername}" th:readonly="${dto.social == false}"></td>
           </tr>
           <tr>
             <th>이메일</th>
