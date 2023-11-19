@@ -12,7 +12,7 @@
 
 ## ✔️ 프로젝트 계기
 첫 여행 웹사이트 프로젝트는 egovFramework와 iBatis를 사용하여 개발되었습니다. <br>
-이를 통해 새로운 기술과 라이브러리 및 AWS 배포 등의 학습 필요성을 느껴 <br>
+이를 통해 새로운 기술과 라이브러리 및 AWS 배포 등에 욕심이 생겨 <br>
 Spring Boot와 JPA로 이루어진 프로젝트를 하게 되었습니다.
 <br><br>
 
@@ -33,12 +33,12 @@ Spring Boot와 JPA로 이루어진 프로젝트를 하게 되었습니다.
 * Java 17.0
 * Front : Bootstrap / Thymeleaf / Javascript
 * Server : Apache Tomcat 9.0 / AWS EC2
-* Framework : SpringBoot 3.1.0 
+* Framework : SpringBoot 3.1.0 / Spring Security 6.0
 * Database : MariaDB 10.11.5
 * ORM : Spring Data JPA
 * IDE : IntelliJ
 * API : KAKAO MAP API
-* ETC : GIT
+* VCS : GIT
 <br><br>
 
 ## ✔️ 주요 기능
@@ -92,7 +92,7 @@ eGovframework에서는 직접 쿼리문을 작성했던 것과는 달리, JPA에
 그러나 QueryDSL의 Gradle 설정에서 실수하여 고생한 적이 있고, 이를 통해 QueryDSL에 대한 공부의 필요성을 깨달았습니다.<br><br>
 또한, 스프링 시큐리티를 이용한 로그인 구현은 처음 접하는 기능이어서 어려움을 겪었습니다. <br>
 하지만 여러 책을 통해 문제를 해결하고 스프링 시큐리티에 대한 이해를 높일 수 있는 좋은 경험이었습니다.<br><br>
-첫 프로젝트를 AWS EC2로 배포하고자 하였을 때는 오라클이 유료인 RDS 설정에서 막혀 포기했었고, <br>
+첫 프로젝트를 AWS EC2로 배포하고자 하였을 때는 Oracle이 유료인 RDS 설정에서 막혀 포기했었고, <br>
 이번 프로젝트는 문제 없이 배포하는데 성공하였습니다.<br><br>
 새로운 기술과 라이브러리 등을 습득 및 AWS 배포까지 학습한 좋은 경험이었습니다.<br>
 
