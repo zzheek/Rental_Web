@@ -1,5 +1,5 @@
 # 🖨️ Project Rental_Web
-배포  http://ec2-15-164-216-100.ap-northeast-2.compute.amazonaws.com:8080/
+
 <br><br>
 
 
