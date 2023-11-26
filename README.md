@@ -2,7 +2,6 @@
 
 <br><br>
 
-
 ## ✔️ 프로젝트 소개
 - 최근 렌탈 업체 게시판 CRUD
 - FullCalendar를 활용한 AS일정 예약 및 취소
